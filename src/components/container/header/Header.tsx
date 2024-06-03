@@ -1,5 +1,5 @@
 import HandTrackerToggler from "../../button/HandTrackerToggler"
-import SocialMediaLinks from "../SocialMediaLinks"
+import SocialMediaLinks from "../socialMediaLinks/SocialMediaLinks"
 
 type HeaderProps = {
 	isHandTrackerEnabled: boolean

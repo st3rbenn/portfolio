@@ -152,7 +152,7 @@ import { Camera } from "@mediapipe/camera_utils"
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils"
 import { HAND_CONNECTIONS, Hands, InputImage, Results } from "@mediapipe/hands"
 import { motion } from "framer-motion"
-import { useEffect, useRef, useState, useMemo, useCallback } from "react"
+import { useCallback, useEffect, useMemo, useRef } from "react"
 
 export interface HandLandmarks {
 	fingers: {

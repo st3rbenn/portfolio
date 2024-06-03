@@ -1,11 +1,8 @@
 import React from "react"
 import { motion } from "framer-motion"
-type GithubSVGProps = {
-  hovered: boolean
-}
+type GithubSVGProps = {}
 
 function GithubSVG(props: GithubSVGProps) {
-  const { hovered } = props
 	return (
 		<motion.svg
 			width="35"

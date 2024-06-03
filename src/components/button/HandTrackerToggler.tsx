@@ -1,6 +1,5 @@
-import { motion } from "framer-motion"
-import HandTrackerSVG from "../svg/HandTrackerSVG"
 import CustomButton from "../common/CustomButton"
+import HandTrackerSVG from "../svg/HandTrackerSVG"
 type HandTrackerTogglerProps = {
 	isHandTrackerEnabled: boolean
 	setIsHandTrackerEnabled: (isHandTrackerEnabled: boolean) => void

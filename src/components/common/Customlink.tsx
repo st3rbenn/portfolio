@@ -1,5 +1,10 @@
 import React from "react"
-import { motion } from "framer-motion"
+import {
+	AnimationControls,
+	motion,
+	TargetAndTransition,
+	VariantLabels,
+} from "framer-motion"
 
 type LinkProps = {
 	children: React.ReactNode
@@ -8,25 +13,40 @@ type LinkProps = {
 	onHoverEnd?: () => void
 	onClick?: () => void
 	link: string
+	external?: boolean
+	animation?: boolean | AnimationControls | TargetAndTransition | VariantLabels
 }
 
-const btnStyle = {
-	background: "none",
-	border: "none",
-	cursor: "pointer",
-	outline: "none",
+const linkStyle = {
+	textDecoration: "none",
+	color: "#E5F0FF",
+	display: "flex",
+	alignItems: "center",
+	justifyContent: "center",
 }
 
 const CustomLink = (props: LinkProps) => {
-	const { children, style, onHoverStart, onHoverEnd, onClick, link } = props
+	const {
+		children,
+		style,
+		onHoverStart,
+		onHoverEnd,
+		onClick,
+		link,
+		external,
+    animation
+	} = props
 	return (
 		<motion.a
+			animate={animation}
 			style={{
-				...btnStyle,
+				...linkStyle,
 				...style,
+				flexDirection: "column",
+				gap: children ? "0.5rem" : "0",
 			}}
 			href={link}
-			target="_blank"
+			target={external ? "_blank" : "_self"}
 			whileHover={{ scale: 1.1 }}
 			whileTap={{ scale: 0.9 }}
 			onHoverStart={onHoverStart}

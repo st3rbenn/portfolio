@@ -1,6 +1,6 @@
-import { motion, useAnimate } from "framer-motion"
 import React, { useEffect, useState } from "react"
 import HeadSVG from "../svg/HeadSVG"
+import { motion } from "framer-motion"
 
 interface HandLandmarks {
 	fingers: {
@@ -9,15 +9,16 @@ interface HandLandmarks {
 	}
 }
 
-type HandTrackerComponentProps = {
+type HeadAnimationProps = {
 	handLandmarks?: HandLandmarks
 	isHandTrackerHovered: boolean
+	style?: React.CSSProperties
 }
 
-const HandTrackerComponent: React.FC<HandTrackerComponentProps> = (
-	porps: HandTrackerComponentProps
+const HeadAnimation: React.FC<HeadAnimationProps> = (
+	porps: HeadAnimationProps
 ) => {
-	const { handLandmarks, isHandTrackerHovered } = porps
+	const { handLandmarks, isHandTrackerHovered, style } = porps
 	const [isBlinking, setIsBlinking] = useState(false)
 	const [irisPosition, setIrisPosition] = useState({ x: 0, y: 0 })
 
@@ -45,61 +46,30 @@ const HandTrackerComponent: React.FC<HandTrackerComponentProps> = (
 		return () => clearInterval(interval)
 	}, [])
 
-  //iris follow hand
-  useEffect(() => {
-    if (handLandmarks) {
-      const { fingers } = handLandmarks
-      const indexFinger = fingers.index
-      const middleFinger = fingers.middle
-      const indexFingerX = indexFinger[0]
-      const indexFingerY = indexFinger[1]
-      const middleFingerX = middleFinger[0]
-      const middleFingerY = middleFinger[1]
-      const irisX = (indexFingerX + middleFingerX) / 5
-      const irisY = (indexFingerY + middleFingerY) / 5
-      setIrisPosition({
-        x: (irisX - 100) / 50,
-        y: (irisY - 100) / 50,
-      })
-    }
-  }, [handLandmarks])
+	//iris follow hand
+	useEffect(() => {
+		if (handLandmarks) {
+			const { fingers } = handLandmarks
+			const indexFinger = fingers.index
+			const middleFinger = fingers.middle
+			const indexFingerX = indexFinger[0]
+			const indexFingerY = indexFinger[1]
+			const middleFingerX = middleFinger[0]
+			const middleFingerY = middleFinger[1]
+			const irisX = (indexFingerX + middleFingerX) / 5
+			const irisY = (indexFingerY + middleFingerY) / 5
+			setIrisPosition({
+				x: (irisX - 100) / 50,
+				y: (irisY - 100) / 50,
+			})
+		}
+	}, [handLandmarks])
 
 	return (
-		<motion.section
-			style={{
-				display: "flex",
-				flexDirection: "column",
-				alignItems: "center",
-				justifyContent: "center",
-				height: "100vh",
-			}}
-		>
+		<motion.div style={style}>
 			<HeadSVG isBlinking={isBlinking} irisPosition={irisPosition} />
-			<motion.h1
-				animate={{
-					opacity: [0, 1],
-					y: [20, 0],
-					transition: {
-						duration: 0.5,
-					},
-				}}
-			>
-				Welcome !
-			</motion.h1>
-			<motion.p
-				animate={{
-					opacity: [0, 1],
-					y: [20, 0],
-					transition: {
-						duration: 0.5,
-						delay: 0.5,
-					},
-				}}
-			>
-				🚧 My portfolio is currently under development 🚧
-			</motion.p>
-		</motion.section>
+		</motion.div>
 	)
 }
 
-export default HandTrackerComponent
+export default HeadAnimation
