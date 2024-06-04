@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 import NavigationBar from "../../components/container/NavigationBar/NavigationBar"
 import { HandLandmarks } from "../../components/cursor/CustomCursor"
-import HeadAnimation from "../../components/handtracker/HandTrackerComponent"
+import HeadAnimation from "../../components/handtracker/HeadAnimation"
 import "./home.scss"
 
 type HomeProps = {
@@ -51,7 +51,7 @@ const Home = (props: HomeProps) => {
 				</motion.div>
 				<motion.p className="section__quote">
 					a french developer who like baking websites like a baker making is
-					bread, with love and passion 🥖
+					bread, with ♥️ and passion 🥖
 				</motion.p>
 			</motion.div>
 			<NavigationBar />

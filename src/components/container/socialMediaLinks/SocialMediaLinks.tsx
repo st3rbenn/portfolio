@@ -21,13 +21,18 @@ const SocialMediaLinks = (props: Props) => {
 			<CustomLink
 				link="https://www.linkedin.com/in/%F0%9F%90%89-anthonin-colas-82ba65229/"
 				external
+				whileHoverAnim
 			>
 				<LinkedinSVG />
 			</CustomLink>
-			<CustomLink link="https://github.com/st3rbenn" external>
+			<CustomLink link="https://github.com/st3rbenn" external whileHoverAnim>
 				<GithubSVG />
 			</CustomLink>
-			<CustomLink link="mailto:anthonincolaspro@gmail.com" external>
+			<CustomLink
+				link="mailto:anthonincolaspro@gmail.com"
+				external
+				whileHoverAnim
+			>
 				<MailSVG />
 			</CustomLink>
 		</nav>

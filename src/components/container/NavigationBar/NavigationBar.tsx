@@ -5,6 +5,7 @@ import SwipeUpSVG from "../../svg/SwipeUpSVG"
 
 import CustomLink from "../../common/Customlink"
 import "./navigationBar.scss"
+import { useState } from "react"
 
 type Props = {}
 
@@ -19,7 +20,7 @@ const NAVBAR = [
 	{
 		title: "career",
 		link: "/career",
-		svg: <SwipeLeftSVG />,
+		svg: SwipeLeftSVG,
 		animation: {
 			y: [10, 0],
 			opacity: [0, 1],
@@ -32,7 +33,7 @@ const NAVBAR = [
 	{
 		title: "projects",
 		link: "/projects",
-		svg: <SwipeUpSVG />,
+		svg: SwipeUpSVG,
 		animation: {
 			y: [10, 0],
 			opacity: [0, 1],
@@ -45,7 +46,7 @@ const NAVBAR = [
 	{
 		title: "degree",
 		link: "/degree",
-		svg: <SwipeRightSVG />,
+		svg: SwipeRightSVG,
 		animation: {
 			y: [10, 0],
 			opacity: [0, 1],
@@ -58,15 +59,40 @@ const NAVBAR = [
 ]
 
 const NavigationBar = (props: Props) => {
+	const [hoverStates, setHoverStates] = useState<Record<string, boolean>>({
+		career: false,
+		projects: false,
+		degree: false,
+	})
+
+	const handleMouseEnter = (key: string) => {
+		setHoverStates((prev) => ({ ...prev, [key]: true }))
+	}
+
+	const handleMouseLeave = (key: string) => {
+		setHoverStates((prev) => ({ ...prev, [key]: false }))
+	}
+
 	return (
 		<motion.div className="navigation-bar">
 			{NAVBAR.map((item, index) => (
-				<CustomLink key={index} link={item.link} animation={item.animation}>
-					{item.svg}
+				<CustomLink
+					key={index + item.title}
+					link={item.link}
+					animation={item.animation}
+					onMouseEnter={() => handleMouseEnter(item.title)}
+					onMouseLeave={() => handleMouseLeave(item.title)}
+				>
+					<item.svg isHovered={hoverStates[item.title]} />
 					<motion.p
 						style={{
 							fontWeight: "bolder",
-							alignSelf: item.title === "degree" ? "end" : "start",
+							alignSelf:
+								item.title === "degree"
+									? "end"
+									: item.title === "projects"
+									? "center"
+									: "start",
 						}}
 					>
 						{item.title}

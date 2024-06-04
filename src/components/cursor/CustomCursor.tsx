@@ -1,158 +1,10 @@
-// import { Camera } from "@mediapipe/camera_utils"
-// import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils"
-// import { HAND_CONNECTIONS, Hands, InputImage, Results } from "@mediapipe/hands"
-// import { motion } from "framer-motion"
-// import { useEffect, useRef } from "react"
-
-// export interface handLandmarks {
-// 	fingers: {
-// 		index: number[]
-// 		middle: number[]
-// 	}
-// }
-
-// interface IHandTrackerComponentProps {
-// 	handLandmarks: handLandmarks | undefined
-// 	setHandLandmarks: React.Dispatch<
-// 		React.SetStateAction<handLandmarks | undefined>
-// 	>
-// 	isHandTrackerEnabled: boolean
-// }
-
-// const CustomCusor: React.FC<IHandTrackerComponentProps> = (
-// 	props: IHandTrackerComponentProps
-// ) => {
-// 	const { handLandmarks, setHandLandmarks, isHandTrackerEnabled } = props
-// 	const cursorRef = useRef(null)
-
-// 	const videoRef = useRef<HTMLVideoElement>(null)
-// 	const socketRef = useRef<any>(null)
-
-// 	const hands = new Hands({
-// 		locateFile: (file: string) =>
-// 			`https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`,
-// 	})
-
-// 	useEffect(() => {
-// 		if (!videoRef.current) {
-// 			console.error("Video or canvas element is not ready")
-// 			return
-// 		}
-
-// 		const videoElement = videoRef.current
-// 		const canvasElement = document.createElement("canvas")
-// 		const canvasCtx = canvasElement.getContext("2d")
-// 		canvasElement.width = window.innerWidth
-// 		canvasElement.height = window.innerHeight
-// 		if (!canvasCtx) {
-// 			console.error("Failed to get canvas context")
-// 			return
-// 		}
-
-// 		hands.setOptions({
-// 			maxNumHands: 1,
-// 			modelComplexity: 1,
-// 			minDetectionConfidence: 0.5,
-// 			minTrackingConfidence: 0.7,
-// 		})
-
-// 		hands.onResults((results: Results) => {
-// 			canvasCtx.save()
-// 			canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height)
-// 			canvasCtx.drawImage(
-// 				results.image,
-// 				0,
-// 				0,
-// 				window.innerWidth,
-// 				window.innerHeight
-// 			)
-
-// 			if (results.multiHandLandmarks) {
-// 				for (const landmarks of results.multiHandLandmarks) {
-// 					drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
-// 						color: "#00FF00",
-// 						lineWidth: 5,
-// 					})
-// 					drawLandmarks(canvasCtx, landmarks, {
-// 						color: "#FF0000",
-// 						lineWidth: 2,
-// 					})
-
-// 					// Adjusted for mirroring
-// 					const index = [
-// 						canvasElement.width - landmarks[8].x * canvasElement.width,
-// 						landmarks[8].y * canvasElement.height,
-// 					]
-// 					const middle = [
-// 						canvasElement.width - landmarks[12].x * canvasElement.width,
-// 						landmarks[12].y * canvasElement.height,
-// 					]
-// 					setHandLandmarks({ fingers: { index, middle } })
-// 				}
-// 			}
-// 			canvasCtx.restore()
-// 		})
-// 	}, [isHandTrackerEnabled, setHandLandmarks])
-
-// 	useEffect(() => {
-// 		if (!isHandTrackerEnabled || !videoRef.current) {
-// 			return
-// 		}
-
-// 		const camera = new Camera(videoRef.current, {
-// 			onFrame: async () => {
-// 				await hands.send({ image: videoRef.current as InputImage })
-// 			},
-// 			width: window.innerWidth,
-// 			height: window.innerHeight,
-// 		})
-// 		camera.start()
-
-// 		return () => {
-// 			camera.stop()
-// 		}
-// 	}, [isHandTrackerEnabled])
-
-// 	return (
-// 		<>
-// 			<video
-// 				ref={videoRef}
-// 				style={{ display: "none", transform: "scaleX(-1)" }}
-// 				playsInline
-// 			></video>
-// 			{/* <canvas
-// 				ref={canvasRef}
-// 				width={window.innerWidth}
-// 				height={window.innerHeight}
-// 				style={{
-// 					transform: "scaleX(-1)",
-// 					display: "none",
-// 				}}
-// 			></canvas> */}
-// 			{handLandmarks && isHandTrackerEnabled && (
-// 				<motion.div
-// 					style={{
-// 						position: "absolute",
-// 						top: handLandmarks.fingers.index[1],
-// 						left: handLandmarks.fingers.index[0], // Correct positioning
-// 						width: 20,
-// 						height: 20,
-// 						backgroundColor: "blue",
-// 						borderRadius: "50%",
-// 					}}
-// 				/>
-// 			)}
-// 		</>
-// 	)
-// }
-
-// export default CustomCusor
-
 import { Camera } from "@mediapipe/camera_utils"
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils"
 import { HAND_CONNECTIONS, Hands, InputImage, Results } from "@mediapipe/hands"
 import { motion } from "framer-motion"
-import { useCallback, useEffect, useMemo, useRef } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { EMPTY_POSITION, Position } from "../../hooks/commonHooks"
+import CursorSVG from "../svg/CursorSVG"
 
 export interface HandLandmarks {
 	fingers: {
@@ -166,16 +18,61 @@ interface IHandTrackerComponentProps {
 	setHandLandmarks: React.Dispatch<
 		React.SetStateAction<HandLandmarks | undefined>
 	>
+
+	mousePosition: Position
+	setMousePosition: React.Dispatch<React.SetStateAction<Position>>
+
 	isHandTrackerEnabled: boolean
+	bodyRef: React.RefObject<HTMLDivElement>
 }
 
-const CustomCursor: React.FC<IHandTrackerComponentProps> = ({
-	handLandmarks,
-	setHandLandmarks,
-	isHandTrackerEnabled,
-}) => {
+const CustomCursor: React.FC<IHandTrackerComponentProps> = (
+	props: IHandTrackerComponentProps
+) => {
+	const {
+		handLandmarks,
+		setHandLandmarks,
+		isHandTrackerEnabled,
+		mousePosition,
+		setMousePosition,
+		bodyRef,
+	} = props
 	const videoRef = useRef<HTMLVideoElement>(null)
 	const canvasRef = useRef<HTMLCanvasElement>(null)
+	const [cursorPosition, setCursorPosition] = useState<Position>(EMPTY_POSITION)
+	const cursorRef = useRef<HTMLDivElement>(null)
+	const [performAction, setPerformAction] = useState(false)
+	let lastHoveredElement: Element | null = null
+
+	const mouseEnterEvent = new MouseEvent("mouseenter", {
+		view: window,
+		cancelable: false,
+	})
+	const mouseLeaveEvent = new MouseEvent("mouseleave", {
+		view: window,
+		cancelable: false,
+	})
+	const clickEvent = new MouseEvent("click", {
+		view: window,
+		cancelable: true,
+	})
+
+	const handleCurrentElementHovered = (element: Element | null) => {
+		if (lastHoveredElement !== element) {
+			setPerformAction(false)
+			lastHoveredElement?.dispatchEvent(mouseLeaveEvent)
+			lastHoveredElement = element
+		}
+
+		if (element) {
+			element.parentNode?.dispatchEvent(mouseEnterEvent)
+			switch (element.nodeName) {
+				case "svg":
+					setPerformAction(true)
+					break
+			}
+		}
+	}
 
 	const hands = useMemo(
 		() =>
@@ -230,6 +127,10 @@ const CustomCursor: React.FC<IHandTrackerComponentProps> = ({
 							canvasElement.width - landmarks[12].x * canvasElement.width,
 							landmarks[12].y * canvasElement.height,
 						]
+
+						const element = document.elementFromPoint(index[0], index[1])
+						handleCurrentElementHovered(element)
+
 						setHandLandmarks({ fingers: { index, middle } })
 					}
 				}
@@ -247,8 +148,8 @@ const CustomCursor: React.FC<IHandTrackerComponentProps> = ({
 		hands.setOptions({
 			maxNumHands: 1,
 			modelComplexity: 1,
-			minDetectionConfidence: 0.5,
-			minTrackingConfidence: 0.7,
+			minDetectionConfidence: 0.4,
+			minTrackingConfidence: 0.4,
 		})
 
 		hands.onResults(onResults)
@@ -265,6 +166,43 @@ const CustomCursor: React.FC<IHandTrackerComponentProps> = ({
 		}
 	}, [onFrame, onResults, isHandTrackerEnabled, hands])
 
+	useEffect(() => {
+		if (handLandmarks && isHandTrackerEnabled) {
+			const { fingers } = handLandmarks
+			setCursorPosition({
+				x: fingers.index[0],
+				y: fingers.index[1],
+				centerX: fingers.middle[0],
+				centerY: fingers.middle[1],
+				height: window.innerHeight,
+				width: window.innerWidth,
+			})
+		} else {
+			setCursorPosition(mousePosition)
+		}
+	}, [mousePosition, handLandmarks, hands])
+
+	// useEffect(() => {
+	// 	const handleMouseMove = (event: MouseEvent) => {
+	// 		const { clientX, clientY } = event
+	// 		const element = document.elementFromPoint(clientX, clientY)
+
+	// 		// handleCurrentElementHovered(element)
+
+	// 		// Déplace également le curseur personnalisé à la position de la souris
+	// 		if (cursorRef.current) {
+	// 			cursorRef.current.style.left = `${clientX}px`
+	// 			cursorRef.current.style.top = `${clientY}px`
+	// 		}
+	// 	}
+
+	// 	document.addEventListener("mousemove", handleMouseMove)
+
+	// 	return () => {
+	// 		document.removeEventListener("mousemove", handleMouseMove)
+	// 	}
+	// }, [cursorRef])
+
 	return (
 		<>
 			<video
@@ -272,25 +210,24 @@ const CustomCursor: React.FC<IHandTrackerComponentProps> = ({
 				style={{ display: "none", transform: "scaleX(-1)" }}
 				playsInline
 			></video>
-			<canvas
+			<motion.canvas
 				ref={canvasRef}
 				width={window.innerWidth}
 				height={window.innerHeight}
 				style={{ transform: "scaleX(-1)", display: "none" }}
-			></canvas>
-			{handLandmarks && isHandTrackerEnabled && (
-				<motion.div
-					style={{
-						position: "absolute",
-						top: handLandmarks.fingers.index[1],
-						left: handLandmarks.fingers.index[0], // Correct positioning
-						width: 20,
-						height: 20,
-						backgroundColor: "blue",
-						borderRadius: "50%",
-					}}
-				/>
-			)}
+			/>
+			<motion.div
+				style={{
+					position: "absolute",
+					top: cursorPosition.y - 19,
+					left: cursorPosition.x - 10,
+					pointerEvents: "none",
+					zIndex: 9999,
+				}}
+				ref={cursorRef}
+			>
+				<CursorSVG performAction={performAction} />
+			</motion.div>
 		</>
 	)
 }

@@ -1,5 +1,10 @@
 import React from "react"
-import { motion } from "framer-motion"
+import {
+	AnimationControls,
+	motion,
+	TargetAndTransition,
+	VariantLabels,
+} from "framer-motion"
 
 type ButtonProps = {
 	children: React.ReactNode
@@ -7,25 +12,36 @@ type ButtonProps = {
 	onHoverStart?: () => void
 	onHoverEnd?: () => void
 	onClick?: () => void
+	animation?: boolean | AnimationControls | TargetAndTransition | VariantLabels
+	whileHover?: TargetAndTransition | VariantLabels | undefined
 }
 
 const btnStyle = {
 	background: "none",
 	border: "none",
-	cursor: "pointer",
+	cursor: "none",
 	outline: "none",
 }
 
 const CustomButton = (props: ButtonProps) => {
-	const { children, style, onHoverStart, onHoverEnd, onClick } = props
+	const {
+		children,
+		style,
+		onHoverStart,
+		onHoverEnd,
+		onClick,
+		animation,
+		whileHover,
+	} = props
 	return (
 		<motion.button
 			style={{
 				...btnStyle,
 				...style,
 			}}
-			whileHover={{ scale: 1.1 }}
+			whileHover={whileHover ? whileHover : { scale: 1.1 }}
 			whileTap={{ scale: 0.9 }}
+			animate={animation}
 			onHoverStart={onHoverStart}
 			onHoverEnd={onHoverEnd}
 			onClick={onClick}

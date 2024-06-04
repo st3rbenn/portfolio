@@ -17,6 +17,10 @@ const HandTrackerToggler = (props: HandTrackerTogglerProps) => {
 		<CustomButton
 			style={{
 				paddingTop: "2rem",
+				justifySelf: "center",
+			}}
+			animation={{
+				scale: isHandTrackerEnabled ? 1.1 : 1,
 			}}
 			onHoverStart={() => setIsHandTrackerHovered(true)}
 			onHoverEnd={() => setIsHandTrackerHovered(false)}

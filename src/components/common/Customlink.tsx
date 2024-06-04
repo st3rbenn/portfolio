@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useRef } from "react"
 import {
 	AnimationControls,
 	motion,
@@ -15,6 +15,10 @@ type LinkProps = {
 	link: string
 	external?: boolean
 	animation?: boolean | AnimationControls | TargetAndTransition | VariantLabels
+	onMouseEnter?: () => void
+	onMouseLeave?: () => void
+	whileHoverAnim?: boolean
+	onMouseHover?: () => void
 }
 
 const linkStyle = {
@@ -34,24 +38,58 @@ const CustomLink = (props: LinkProps) => {
 		onClick,
 		link,
 		external,
-    animation
+		animation,
+		onMouseEnter,
+		onMouseLeave,
+		whileHoverAnim,
+		onMouseHover,
 	} = props
+	const linkRef = useRef<HTMLAnchorElement>(null)
+
+	useEffect(() => {
+		const linkElement = linkRef.current
+		if (linkElement) {
+			const handleMouseEnter = (ev: MouseEvent) => {
+				onMouseEnter?.()
+				onMouseHover?.()
+				ev.stopImmediatePropagation()
+			}
+			const handleMouseLeave = (ev: MouseEvent) => {
+				onMouseLeave?.()
+			}
+
+			linkElement.addEventListener("mouseenter", handleMouseEnter)
+			linkElement.addEventListener("mouseleave", handleMouseLeave)
+
+			return () => {
+				linkElement.removeEventListener("mouseenter", handleMouseEnter)
+				linkElement.removeEventListener("mouseleave", handleMouseLeave)
+			}
+		}
+	}, [onMouseEnter, onMouseLeave, onMouseHover])
+
 	return (
 		<motion.a
+			ref={linkRef}
 			animate={animation}
 			style={{
 				...linkStyle,
 				...style,
+				cursor: "none",
 				flexDirection: "column",
 				gap: children ? "0.5rem" : "0",
 			}}
+      className="watched"
 			href={link}
 			target={external ? "_blank" : "_self"}
-			whileHover={{ scale: 1.1 }}
+			whileHover={{ scale: whileHoverAnim ? 1.1 : 1 }}
 			whileTap={{ scale: 0.9 }}
 			onHoverStart={onHoverStart}
 			onHoverEnd={onHoverEnd}
 			onClick={onClick}
+			onMouseEnter={onMouseEnter}
+			onMouseLeave={onMouseLeave}
+			onMouseOver={onMouseHover}
 		>
 			{children}
 		</motion.a>
