@@ -1,17 +1,18 @@
-import React, { useEffect, useRef } from "react"
 import {
 	AnimationControls,
 	motion,
 	TargetAndTransition,
 	VariantLabels,
 } from "framer-motion"
+import React, { MouseEventHandler, useEffect, useRef } from "react"
+import { MouseEvent as ReactMouseEvent } from "react"
+import { useNavigate } from "react-router-dom"
 
 type LinkProps = {
 	children: React.ReactNode
 	style?: React.CSSProperties
 	onHoverStart?: () => void
 	onHoverEnd?: () => void
-	onClick?: () => void
 	link: string
 	external?: boolean
 	animation?: boolean | AnimationControls | TargetAndTransition | VariantLabels
@@ -19,6 +20,10 @@ type LinkProps = {
 	onMouseLeave?: () => void
 	whileHoverAnim?: boolean
 	onMouseHover?: () => void
+	elemHoverable?: boolean
+	elemClickable?: boolean
+	elemAsAnim?: boolean
+	back?: boolean
 }
 
 const linkStyle = {
@@ -35,7 +40,6 @@ const CustomLink = (props: LinkProps) => {
 		style,
 		onHoverStart,
 		onHoverEnd,
-		onClick,
 		link,
 		external,
 		animation,
@@ -43,30 +47,79 @@ const CustomLink = (props: LinkProps) => {
 		onMouseLeave,
 		whileHoverAnim,
 		onMouseHover,
+		elemHoverable = false,
+		elemClickable = false,
+		elemAsAnim = false,
+		back = false,
 	} = props
 	const linkRef = useRef<HTMLAnchorElement>(null)
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		const linkElement = linkRef.current
 		if (linkElement) {
 			const handleMouseEnter = (ev: MouseEvent) => {
 				onMouseEnter?.()
-				onMouseHover?.()
 				ev.stopImmediatePropagation()
 			}
+
 			const handleMouseLeave = (ev: MouseEvent) => {
 				onMouseLeave?.()
+				ev.stopImmediatePropagation()
+			}
+
+			const handleClick = (ev: MouseEvent) => {
+				if (back) {
+          ev.preventDefault()
+          navigate(-1)
+				} else {
+					if (external || link) {
+						ev.preventDefault()
+						if (external) {
+							window.open(link, "_blank", "noopener,noreferrer")
+						} else {
+							navigate(link)
+						}
+					}
+				}
+				ev.stopImmediatePropagation()
+			}
+
+			const handleMouseHover = (ev: MouseEvent) => {
+				onMouseHover?.()
+				ev.stopImmediatePropagation()
 			}
 
 			linkElement.addEventListener("mouseenter", handleMouseEnter)
 			linkElement.addEventListener("mouseleave", handleMouseLeave)
+			linkElement.addEventListener("click", handleClick)
+			linkElement.addEventListener("mouseover", handleMouseHover)
 
 			return () => {
 				linkElement.removeEventListener("mouseenter", handleMouseEnter)
 				linkElement.removeEventListener("mouseleave", handleMouseLeave)
+				linkElement.removeEventListener("click", handleClick)
+				linkElement.removeEventListener("mouseover", handleMouseHover)
 			}
 		}
-	}, [onMouseEnter, onMouseLeave, onMouseHover])
+	}, [onMouseEnter, onMouseLeave, onMouseHover, external, link])
+
+	useEffect(() => {
+		const linkElement = linkRef.current
+		if (linkElement) {
+			if (elemHoverable) {
+				linkElement.setAttribute("data-elem-hoverable", "true")
+			}
+
+			if (elemClickable) {
+				linkElement.setAttribute("data-elem-clickable", "true")
+			}
+
+			if (elemAsAnim) {
+				linkElement.setAttribute("data-elem-as-anim", "true")
+			}
+		}
+	}, [elemHoverable, elemClickable, elemAsAnim])
 
 	return (
 		<motion.a
@@ -79,14 +132,11 @@ const CustomLink = (props: LinkProps) => {
 				flexDirection: "column",
 				gap: children ? "0.5rem" : "0",
 			}}
-      className="watched"
-			href={link}
-			target={external ? "_blank" : "_self"}
+			className="watched"
 			whileHover={{ scale: whileHoverAnim ? 1.1 : 1 }}
 			whileTap={{ scale: 0.9 }}
 			onHoverStart={onHoverStart}
 			onHoverEnd={onHoverEnd}
-			onClick={onClick}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
 			onMouseOver={onMouseHover}

@@ -2,8 +2,12 @@ import { Camera } from "@mediapipe/camera_utils"
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils"
 import { HAND_CONNECTIONS, Hands, InputImage, Results } from "@mediapipe/hands"
 import { motion } from "framer-motion"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { EMPTY_POSITION, Position } from "../../hooks/commonHooks"
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
+import {
+  EMPTY_POSITION,
+  Position,
+  useThrottle
+} from "../../hooks/commonHooks"
 import CursorSVG from "../svg/CursorSVG"
 
 export interface HandLandmarks {
@@ -26,7 +30,7 @@ interface IHandTrackerComponentProps {
 	bodyRef: React.RefObject<HTMLDivElement>
 }
 
-const CustomCursor: React.FC<IHandTrackerComponentProps> = (
+const CustomCursor: FC<IHandTrackerComponentProps> = (
 	props: IHandTrackerComponentProps
 ) => {
 	const {
@@ -42,7 +46,21 @@ const CustomCursor: React.FC<IHandTrackerComponentProps> = (
 	const [cursorPosition, setCursorPosition] = useState<Position>(EMPTY_POSITION)
 	const cursorRef = useRef<HTMLDivElement>(null)
 	const [performAction, setPerformAction] = useState(false)
+	const [isClickAllowed, setIsClickAllowed] = useState(true)
 	let lastHoveredElement: Element | null = null
+	let timeoutId: NodeJS.Timeout | undefined = undefined // Variable globale ou d'état pour stocker l'ID du timeout
+
+	const throttleEvent = useThrottle(
+		(clickableParent: Element, currentElement: Element) => {
+			if (clickableParent?.parentElement?.closest("[data-elem-clickable]")) {
+				clickableParent.dispatchEvent(clickEvent)
+				setPerformAction(false)
+				setIsClickAllowed(true)
+				currentElement.removeAttribute("data-elem-click-disabled")
+			}
+		},
+		2500
+	)
 
 	const mouseEnterEvent = new MouseEvent("mouseenter", {
 		view: window,
@@ -52,24 +70,61 @@ const CustomCursor: React.FC<IHandTrackerComponentProps> = (
 		view: window,
 		cancelable: false,
 	})
+	const mouseHoverEvent = new MouseEvent("mousehover", {
+		view: window,
+		cancelable: false,
+	})
 	const clickEvent = new MouseEvent("click", {
 		view: window,
 		cancelable: true,
+		bubbles: true,
 	})
 
 	const handleCurrentElementHovered = (element: Element | null) => {
-		if (lastHoveredElement !== element) {
-			setPerformAction(false)
+		// console.log(
+		// 	`last hovered element: ${lastHoveredElement?.localName} - current hovered element: ${element?.localName}`
+		// )
+		if (lastHoveredElement?.localName !== element?.localName) {
 			lastHoveredElement?.dispatchEvent(mouseLeaveEvent)
 			lastHoveredElement = element
+			// clearTimeout(timeoutId)
+			// setPerformAction(false)
+			// setIsClickAllowed(true)
 		}
 
 		if (element) {
-			element.parentNode?.dispatchEvent(mouseEnterEvent)
-			switch (element.nodeName) {
-				case "svg":
+			if (element.parentElement?.closest("[data-elem-hoverable]")) {
+				element.parentElement.dispatchEvent(mouseHoverEvent)
+			}
+
+			if (element.parentElement?.closest("[data-elem-as-anim]")) {
+				element.parentElement.dispatchEvent(mouseEnterEvent)
+			}
+
+			const clickableParent = element.parentElement?.closest(
+				"[data-elem-clickable]"
+			)
+			const isClickDisabled = element.parentElement?.closest(
+				"[data-elem-click-disabled]"
+			)
+			if (clickableParent && !isClickDisabled) {
+				if (!performAction && isClickAllowed) {
 					setPerformAction(true)
-					break
+					setIsClickAllowed(false)
+
+					element.parentElement?.setAttribute(
+						"data-elem-click-disabled",
+						"true"
+					)
+
+					timeoutId = setTimeout(() => {
+						clickableParent.dispatchEvent(clickEvent)
+						setPerformAction(false)
+						setIsClickAllowed(true)
+						element.parentElement?.removeAttribute("data-elem-click-disabled")
+						timeoutId = undefined
+					}, 2500)
+				}
 			}
 		}
 	}
@@ -129,7 +184,7 @@ const CustomCursor: React.FC<IHandTrackerComponentProps> = (
 						]
 
 						const element = document.elementFromPoint(index[0], index[1])
-						handleCurrentElementHovered(element)
+						handleCurrentElementHovered(element?.parentElement as Element)
 
 						setHandLandmarks({ fingers: { index, middle } })
 					}
@@ -177,31 +232,34 @@ const CustomCursor: React.FC<IHandTrackerComponentProps> = (
 				height: window.innerHeight,
 				width: window.innerWidth,
 			})
-		} else {
-			setCursorPosition(mousePosition)
 		}
-	}, [mousePosition, handLandmarks, hands])
+	}, [handLandmarks, hands])
 
-	// useEffect(() => {
-	// 	const handleMouseMove = (event: MouseEvent) => {
-	// 		const { clientX, clientY } = event
-	// 		const element = document.elementFromPoint(clientX, clientY)
+	useEffect(() => {
+		window.addEventListener("mousemove", (event) => {
+			setCursorPosition({
+				x: event.clientX,
+				y: event.clientY,
+				centerX: event.clientX,
+				centerY: event.clientY,
+				height: window.innerHeight,
+				width: window.innerWidth,
+			})
+		})
 
-	// 		// handleCurrentElementHovered(element)
-
-	// 		// Déplace également le curseur personnalisé à la position de la souris
-	// 		if (cursorRef.current) {
-	// 			cursorRef.current.style.left = `${clientX}px`
-	// 			cursorRef.current.style.top = `${clientY}px`
-	// 		}
-	// 	}
-
-	// 	document.addEventListener("mousemove", handleMouseMove)
-
-	// 	return () => {
-	// 		document.removeEventListener("mousemove", handleMouseMove)
-	// 	}
-	// }, [cursorRef])
+		return () => {
+			window.removeEventListener("mousemove", (event) => {
+				setCursorPosition({
+					x: event.clientX,
+					y: event.clientY,
+					centerX: event.clientX,
+					centerY: event.clientY,
+					height: window.innerHeight,
+					width: window.innerWidth,
+				})
+			})
+		}
+	}, [])
 
 	return (
 		<>
@@ -209,7 +267,7 @@ const CustomCursor: React.FC<IHandTrackerComponentProps> = (
 				ref={videoRef}
 				style={{ display: "none", transform: "scaleX(-1)" }}
 				playsInline
-			></video>
+			/>
 			<motion.canvas
 				ref={canvasRef}
 				width={window.innerWidth}
@@ -221,7 +279,7 @@ const CustomCursor: React.FC<IHandTrackerComponentProps> = (
 					position: "absolute",
 					top: cursorPosition.y - 19,
 					left: cursorPosition.x - 10,
-					pointerEvents: "none",
+					pointerEvents: performAction ? "auto" : "none",
 					zIndex: 9999,
 				}}
 				ref={cursorRef}

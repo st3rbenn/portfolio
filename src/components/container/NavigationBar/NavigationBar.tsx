@@ -82,6 +82,7 @@ const NavigationBar = (props: Props) => {
 					animation={item.animation}
 					onMouseEnter={() => handleMouseEnter(item.title)}
 					onMouseLeave={() => handleMouseLeave(item.title)}
+					elemAsAnim
 				>
 					<item.svg isHovered={hoverStates[item.title]} />
 					<motion.p

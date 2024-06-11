@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useRef } from "react"
 import {
 	AnimationControls,
 	motion,
@@ -14,6 +14,7 @@ type ButtonProps = {
 	onClick?: () => void
 	animation?: boolean | AnimationControls | TargetAndTransition | VariantLabels
 	whileHover?: TargetAndTransition | VariantLabels | undefined
+  elemClickable?: boolean
 }
 
 const btnStyle = {
@@ -32,13 +33,43 @@ const CustomButton = (props: ButtonProps) => {
 		onClick,
 		animation,
 		whileHover,
+    elemClickable = false,
 	} = props
+
+	const btnRef = useRef<HTMLButtonElement>(null)
+
+	useEffect(() => {
+		const linkElement = btnRef.current
+		if (linkElement) {
+			const handleClick = (ev: MouseEvent) => {
+				onClick?.()
+				ev.stopImmediatePropagation()
+			}
+
+			linkElement.addEventListener("click", handleClick)
+
+			return () => {
+				linkElement.removeEventListener("click", handleClick)
+			}
+		}
+	}, [onClick, elemClickable])
+
+	useEffect(() => {
+		const linkElement = btnRef.current
+		if (linkElement) {
+			if (elemClickable) {
+				linkElement.setAttribute("data-elem-clickable", "true")
+			}
+		}
+	}, [elemClickable])
+
 	return (
 		<motion.button
 			style={{
 				...btnStyle,
 				...style,
 			}}
+			ref={btnRef}
 			whileHover={whileHover ? whileHover : { scale: 1.1 }}
 			whileTap={{ scale: 0.9 }}
 			animate={animation}

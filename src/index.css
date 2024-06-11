@@ -1,3 +1,6 @@
+@import-normalize;
+
+/* nunito-sans-regular - latin */
 @font-face {
 	font-display: swap;
 	font-family: "Nunito Sans";
@@ -6,7 +9,7 @@
 	src: url("../public/assets/fonts/nunito-sans-200.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
-/* nunito-sans-regular - latin */
+/* nunito-sans-200 - latin */
 @font-face {
 	font-display: swap;
 	font-family: "Nunito Sans";
@@ -14,6 +17,7 @@
 	font-weight: 400;
 	src: url("../public/assets/fonts/nunito-sans-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
+
 /* nunito-sans-500 - latin */
 @font-face {
 	font-display: swap;
@@ -86,6 +90,7 @@ h1 {
 h2 {
 	font-size: 2.5rem;
 	font-weight: 200;
+	margin: 0;
 }
 
 p {

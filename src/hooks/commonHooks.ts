@@ -1,21 +1,22 @@
+import { useRef, useCallback, useState } from "react"
+
 export type Position = {
-  x: number
-  y: number
-  width: number
-  height: number
-  centerX: number
-  centerY: number
+	x: number
+	y: number
+	width: number
+	height: number
+	centerX: number
+	centerY: number
 }
 
 const EMPTY_POSITION: Position = {
-  x: 0,
-  y: 0,
-  width: 0,
-  height: 0,
-  centerX: 0,
-  centerY: 0,
+	x: 0,
+	y: 0,
+	width: 0,
+	height: 0,
+	centerX: 0,
+	centerY: 0,
 }
-
 
 const getRelativeCoordinates = (event: MouseEvent, referenceElement: any) => {
 	const position = {
@@ -49,48 +50,54 @@ const getRelativeCoordinates = (event: MouseEvent, referenceElement: any) => {
 	}
 }
 
-function debounce<T extends unknown[], U>(
-  callback: (...args: T) => PromiseLike<U> | U,
-  wait: number
-) {
-  let state:
-    | undefined
-    | {
-        timeout: ReturnType<typeof setTimeout>
-        promise: Promise<U>
-        resolve: (value: U | PromiseLike<U>) => void
-        reject: (value: any) => void
-        latestArgs: T
-      } = undefined
+function useDebounce<T extends (...args: any[]) => any>(
+	callback: T,
+	delay: number
+): T {
+	// Utilisation de useRef pour conserver la même référence d'instance de la fonction
+	const params = useRef<{
+		timeout: NodeJS.Timeout | null
+		args: IArguments[] | null
+	}>({
+		timeout: null,
+		args: null,
+	})
 
-  return (...args: T): Promise<U> => {
-    if (!state) {
-      state = {} as any
-      state!.promise = new Promise((resolve, reject) => {
-        state!.resolve = resolve
-        state!.reject = reject
-      })
-    }
-    clearTimeout(state!.timeout)
-    state!.latestArgs = args
-    state!.timeout = setTimeout(() => {
-      const s = state!
-      state = undefined
-      try {
-        s.resolve(callback(...s.latestArgs))
-      } catch (e) {
-        s.reject(e)
-      }
-    }, wait)
+	const debouncedFunction = useCallback(
+		(...args: any[]) => {
+			if (params.current.timeout) {
+				clearTimeout(params.current.timeout)
+			}
 
-    return state!.promise
-  }
+			params.current.args = args
+
+			params.current.timeout = setTimeout(() => {
+				if (params.current.args) {
+					callback(...(params.current.args as any[]))
+				}
+			}, delay)
+		},
+		[delay, callback]
+	) as T
+
+	return debouncedFunction
 }
 
+function useThrottle(callback: (...args: any[]) => any, delay: number) {
+	const [isAllowed, setIsAllowed] = useState(true)
 
+	const throttledFunction = useCallback(
+		(...args: any[]) => {
+			if (isAllowed) {
+				callback(...args)
+				setIsAllowed(false)
+				setTimeout(() => setIsAllowed(true), delay)
+			}
+		},
+		[isAllowed, delay, callback]
+	)
 
-export {
-  getRelativeCoordinates,
-  EMPTY_POSITION,
-  debounce
+	return throttledFunction
 }
+
+export { getRelativeCoordinates, EMPTY_POSITION, useDebounce, useThrottle }

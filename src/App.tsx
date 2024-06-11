@@ -9,6 +9,9 @@ import {
 	Position,
 } from "./hooks/commonHooks"
 import Home from "./pages/home/Home"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import Degree from "./pages/degree/Degree"
+import _layout from "./pages/_layout"
 
 function App() {
 	const [handLandmarks, setHandLandmarks] = useState<HandLandmarks | undefined>(
@@ -33,6 +36,38 @@ function App() {
 		}
 	}, [])
 
+	const router = createBrowserRouter([
+		{
+			element: (
+				<_layout
+					handLandmarks={handLandmarks}
+					setHandLandmarks={setHandLandmarks}
+					mousePosition={mousePosition}
+					setMousePosition={setMousePosition}
+					isHandTrackerEnabled={isHandTrackerEnabled}
+					setIsHandTrackerEnabled={setIsHandTrackerEnabled}
+					setIsHandTrackerHovered={setIsHandTrackerHovered}
+					bodyRef={bodyRef}
+				/>
+			),
+			children: [
+				{
+					path: "/",
+					element: (
+						<Home
+							handLandmarks={handLandmarks}
+							isHandTrackerHovered={isHandTrackerHovered}
+						/>
+					),
+				},
+				{
+					path: "/degree",
+					element: <Degree />,
+				},
+			],
+		},
+	])
+
 	return (
 		<motion.div
 			className="App"
@@ -41,23 +76,7 @@ function App() {
 			}}
 			ref={bodyRef}
 		>
-			<Header
-				isHandTrackerEnabled={isHandTrackerEnabled}
-				setIsHandTrackerEnabled={setIsHandTrackerEnabled}
-				setIsHandTrackerHovered={setIsHandTrackerHovered}
-			/>
-			<CustomCursor
-				handLandmarks={handLandmarks}
-				setHandLandmarks={setHandLandmarks}
-				mousePosition={mousePosition}
-				setMousePosition={setMousePosition}
-				isHandTrackerEnabled={isHandTrackerEnabled}
-				bodyRef={bodyRef}
-			/>
-			<Home
-				handLandmarks={handLandmarks}
-				isHandTrackerHovered={isHandTrackerHovered}
-			/>
+			<RouterProvider router={router} />
 		</motion.div>
 	)
 }
