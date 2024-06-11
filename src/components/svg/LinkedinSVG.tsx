@@ -1,11 +1,9 @@
 import { motion } from "framer-motion"
 
 type LinkedinSVGProps = {
-	hovered: boolean
 }
 
 const LinkedinSVG = (props: LinkedinSVGProps) => {
-	const { hovered } = props
 	return (
 		<motion.svg
 			width="35"

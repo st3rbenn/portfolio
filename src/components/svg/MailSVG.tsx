@@ -1,12 +1,9 @@
 import React from "react"
 import { motion } from "framer-motion"
 
-type MailSVGProps = {
-  hovered: boolean
-}
+type MailSVGProps = {}
 
 const MailSVG = (props: MailSVGProps) => {
-  const { hovered } = props
 	return (
 		<motion.svg
 			width="35"

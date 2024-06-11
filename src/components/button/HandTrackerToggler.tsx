@@ -1,6 +1,5 @@
-import { motion } from "framer-motion"
-import HandTrackerSVG from "../svg/HandTrackerSVG"
 import CustomButton from "../common/CustomButton"
+import HandTrackerSVG from "../svg/HandTrackerSVG"
 type HandTrackerTogglerProps = {
 	isHandTrackerEnabled: boolean
 	setIsHandTrackerEnabled: (isHandTrackerEnabled: boolean) => void
@@ -17,11 +16,19 @@ const HandTrackerToggler = (props: HandTrackerTogglerProps) => {
 	return (
 		<CustomButton
 			style={{
-				paddingTop: "2rem",
+				gridArea: "1 / 2 / 2 / 3",
+				width: "fit-content",
+				height: "fit-content",
+				justifySelf: "center",
+				marginTop: "2rem",
+			}}
+			animation={{
+				scale: isHandTrackerEnabled ? 1.1 : 1,
 			}}
 			onHoverStart={() => setIsHandTrackerHovered(true)}
 			onHoverEnd={() => setIsHandTrackerHovered(false)}
 			onClick={() => setIsHandTrackerEnabled(!isHandTrackerEnabled)}
+			elemClickable
 		>
 			<HandTrackerSVG isHandTrackerEnabled={isHandTrackerEnabled} />
 		</CustomButton>

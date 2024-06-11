@@ -1,5 +1,7 @@
 import HandTrackerToggler from "../../button/HandTrackerToggler"
-import SocialMediaLinks from "../SocialMediaLinks"
+import CustomLink from "../../common/Customlink"
+import HomeSVG from "../../svg/homeSVG"
+import SocialMediaLinks from "../socialMediaLinks/SocialMediaLinks"
 
 type HeaderProps = {
 	isHandTrackerEnabled: boolean
@@ -21,18 +23,28 @@ const Header = (props: HeaderProps) => {
 				top: "0",
 				left: "0",
 				right: "0",
-				height: "10rem",
 				zIndex: 100,
 				display: "grid",
 				gridTemplateColumns: "repeat(3, 1fr)",
 				gridTemplateRows: "1fr",
-				gap: "0px 0px",
 				paddingLeft: "5rem",
 				paddingRight: "5rem",
-				alignItems: "start",
 			}}
 		>
-			<div></div>
+			<CustomLink
+				link="/"
+				style={{
+					alignItems: "start",
+          width: "fit-content",
+          alignSelf: "center",
+          height: "fit-content",
+				}}
+				animation={{}}
+        elemClickable
+        back
+			>
+				<HomeSVG />
+			</CustomLink>
 			<HandTrackerToggler
 				isHandTrackerEnabled={isHandTrackerEnabled}
 				setIsHandTrackerEnabled={setIsHandTrackerEnabled}
