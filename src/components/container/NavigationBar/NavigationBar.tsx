@@ -18,8 +18,8 @@ const fadeIn = {
 
 const NAVBAR = [
 	{
-		title: "career",
-		link: "/career",
+		title: "about me",
+		link: "/about-me",
 		svg: SwipeLeftSVG,
 		animation: {
 			y: [10, 0],
@@ -31,28 +31,28 @@ const NAVBAR = [
 		},
 	},
 	{
-		title: "projects",
-		link: "/projects",
+		title: "experience",
+		link: "/experience",
 		svg: SwipeUpSVG,
 		animation: {
 			y: [10, 0],
 			opacity: [0, 1],
 			transition: {
 				duration: 0.5,
-				delay: 0.4,
+				delay: 0.5,
 			},
 		},
 	},
 	{
-		title: "degree",
-		link: "/degree",
+		title: "projects",
+		link: "/projects",
 		svg: SwipeRightSVG,
 		animation: {
 			y: [10, 0],
 			opacity: [0, 1],
 			transition: {
 				duration: 0.5,
-				delay: 0.5,
+				delay: 0.4,
 			},
 		},
 	},

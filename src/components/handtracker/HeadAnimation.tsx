@@ -27,7 +27,7 @@ const HeadAnimation: React.FC<HeadAnimationProps> = (
 			setIsBlinking(true)
 			setTimeout(() => {
 				setIsBlinking(false)
-			}, 100 + Math.random() * 300) // Blink duration between 100 to 400 milliseconds
+			}, 100 + Math.random() * 200) // Blink duration between 100 to 400 milliseconds
 		}
 
 		const interval = setInterval(blink, 2000 + Math.random() * 5000) // Random interval between blinks

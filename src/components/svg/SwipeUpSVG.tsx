@@ -7,6 +7,7 @@ type SwipeUpSVGProps = {
 const animationHandVariants = {
 	hover: {
 		rotate: [0, -70, 0],
+    scale: [1, .8, .9, 1],
     transition: {
       ease: "easeOut",
       duration: .7,

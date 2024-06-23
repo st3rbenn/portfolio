@@ -50,8 +50,8 @@ const Home = (props: HomeProps) => {
 					</motion.h1>
 				</motion.div>
 				<motion.p className="section__quote">
-					a french developer who like baking websites like a baker making is
-					bread, with ♥️ and passion 🥖
+					a junior french developer who like baking websites like a baker making is
+					bread with ♥️ and passion
 				</motion.p>
 			</motion.div>
 			<NavigationBar />
