@@ -18,16 +18,7 @@ const Header = (props: HeaderProps) => {
 		setIsHandTrackerEnabled,
 		setIsHandTrackerHovered,
 	} = props
-	const [scrollY, setScrollY] = useState(0)
 
-	const handleScroll = () => {
-		setScrollY(window.scrollY)
-	}
-
-	useEffect(() => {
-		window.addEventListener("scroll", handleScroll)
-		return () => window.removeEventListener("scroll", handleScroll)
-	}, [])
 	return (
 		<motion.header
 			style={{
@@ -37,16 +28,16 @@ const Header = (props: HeaderProps) => {
 				right: "0",
 				zIndex: 100,
 				display: "grid",
-				gridTemplateColumns: "repeat(3, 1fr)",
+				gridTemplateColumns: "repeat(2, 1fr)",
 				gridTemplateRows: "1fr",
 				paddingLeft: "5rem",
 				paddingRight: "5rem",
 			}}
 			animate={{
-				backgroundColor: scrollY > 50 ? "rgba(0, 0, 0, 1)" : "rgba(0, 0, 0, 0)",
-        transition: {
-          duration: 0.5,
-        },
+				opacity: [0, 1],
+				transition: {
+					delay: 2,
+				},
 			}}
 		>
 			<CustomLink
@@ -62,13 +53,13 @@ const Header = (props: HeaderProps) => {
 			>
 				<HomeSVG />
 			</CustomLink>
-			<HandTrackerToggler
+			{/* <HandTrackerToggler
 				isHandTrackerEnabled={isHandTrackerEnabled}
 				setIsHandTrackerEnabled={setIsHandTrackerEnabled}
 				setIsHandTrackerHovered={setIsHandTrackerHovered}
-			/>
+			/> */}
 
-			<SocialMediaLinks changeSide={scrollY > 50} />
+			<SocialMediaLinks />
 		</motion.header>
 	)
 }

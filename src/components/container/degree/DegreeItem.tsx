@@ -39,58 +39,43 @@ const DegreeItem = (props: DegreeItemProps) => {
 			}}
 			variants={fadeVariants}
 			animate="active"
-			style={{
-				display: "grid",
-				gridTemplateColumns: "1fr 1fr",
-			}}
+			style={{}}
 		>
-			<motion.div>
-				<motion.h2
-					style={{
-						margin: "0",
-						fontSize: "1.7rem",
-					}}
-				>
-					{title}
-				</motion.h2>
+			<motion.h2
+				style={{
+					fontSize: "1.7rem",
+				}}
+			>
+				{title}
+			</motion.h2>
+			{/* <motion.div
+				style={{
+					display: "flex",
+					gap: ".5rem",
+				}}
+			>
 				<motion.div
 					style={{
 						display: "flex",
+						alignItems: "center",
 						gap: ".5rem",
 					}}
 				>
-					<motion.div
+					<motion.p
 						style={{
-							display: "flex",
-							alignItems: "center",
-							gap: ".5rem",
+							fontSize: ".8rem",
 						}}
 					>
-						<motion.p
+						{date}
+					</motion.p>
+					{link.length > 1 ? (
+						<CustomLink
+							link={link}
+							external
 							style={{
-								fontSize: ".8rem",
+								textDecoration: "underline",
 							}}
 						>
-							{date}
-						</motion.p>
-						{link.length > 1 ? (
-							<CustomLink
-								link={link}
-								external
-								style={{
-									textDecoration: "underline",
-								}}
-							>
-								<motion.span
-									style={{
-										fontSize: ".8rem",
-										fontWeight: "bold",
-									}}
-								>
-									{linkTitle}
-								</motion.span>
-							</CustomLink>
-						) : (
 							<motion.span
 								style={{
 									fontSize: ".8rem",
@@ -99,12 +84,21 @@ const DegreeItem = (props: DegreeItemProps) => {
 							>
 								{linkTitle}
 							</motion.span>
-						)}
-					</motion.div>
-					<TechnoList technoList={technoList} />
+						</CustomLink>
+					) : (
+						<motion.span
+							style={{
+								fontSize: ".8rem",
+								fontWeight: "bold",
+							}}
+						>
+							{linkTitle}
+						</motion.span>
+					)}
 				</motion.div>
-			</motion.div>
-			<div>
+				<TechnoList technoList={technoList} />
+			</motion.div> */}
+			{/* <div>
 				<motion.p
 					style={{
 						marginTop: ".5rem",
@@ -141,7 +135,7 @@ const DegreeItem = (props: DegreeItemProps) => {
 						</motion.div>
 					))}
 				</motion.div>
-			</div>
+			</div> */}
 		</motion.div>
 	)
 }

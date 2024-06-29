@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { motion } from "framer-motion"
-import { Tooltip } from "@mantine/core"
 
 export type TechnoListItem = {
 	name: string
@@ -15,15 +14,14 @@ const TechnoList = (props: Props) => {
 	const { technoList } = props
 	const [open, setOpen] = useState(false)
 
-	console.log(open)
-
 	return (
 		<motion.div
 			style={{
 				position: "relative",
-				display: "flex",
 				gap: ".5rem",
-				flexGrow: 1,
+        display: "grid",
+        gridTemplateColumns: "repeat(3, 1fr)",
+        padding: "1rem",
 			}}
 			onMouseEnter={() => setOpen(true)}
 			onMouseLeave={() => setOpen(false)}

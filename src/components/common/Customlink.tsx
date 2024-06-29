@@ -125,7 +125,6 @@ const CustomLink = (props: LinkProps) => {
 			ref={linkRef}
 			style={{
 				...style,
-				cursor: "none",
 			}}
 			className="watched"
 		>

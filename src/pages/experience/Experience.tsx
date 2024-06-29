@@ -164,7 +164,7 @@ const DEGREE_LIST = [
 	},
 ] as DegreeItemProps[]
 
-const Degree = (props: Props) => {
+const Experience = (props: Props) => {
 	const titleRef = useRef(null)
 	const [selectedDegree, setSelectedDegree] = useState(null)
 
@@ -174,11 +174,23 @@ const Degree = (props: Props) => {
 				height: "100vh",
 				display: "flex",
 				flexDirection: "column",
-				alignItems: "center",
-				justifyContent: "end",
 			}}
 		>
-			<motion.section
+      <motion.h2
+				ref={titleRef}
+				style={{
+					fontWeight: "lighter",
+					fontSize: "3rem",
+					width: "100%",
+					textAlign: "center",
+				}}
+			>
+				Experience
+			</motion.h2>
+
+
+
+			{/* <motion.section
 				style={{
 					width: "100%",
 					margin: "0 auto",
@@ -225,9 +237,9 @@ const Degree = (props: Props) => {
 				}}
 			>
 				Experience
-			</motion.h2>
+			</motion.h2> */}
 		</motion.div>
 	)
 }
 
-export default Degree
+export default Experience

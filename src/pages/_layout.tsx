@@ -98,7 +98,7 @@ const _layout = (props: _layoutProps) => {
 				setIsHandTrackerEnabled={setIsHandTrackerEnabled}
 				setIsHandTrackerHovered={setIsHandTrackerHovered}
 			/>
-			{!isMobile && (
+			{/* {!isMobile && (
 				<CustomCursor
 					handLandmarks={handLandmarks}
 					setHandLandmarks={setHandLandmarks}
@@ -107,9 +107,9 @@ const _layout = (props: _layoutProps) => {
 					isHandTrackerEnabled={isHandTrackerEnabled}
 					bodyRef={bodyRef}
 				/>
-			)}
+			)} */}
 
-			<motion.svg
+			{/* <motion.svg
 				style={{
           position: "fixed",
           top: 0,
@@ -132,7 +132,7 @@ const _layout = (props: _layoutProps) => {
 						stroke="#E5F0FF"
 					/>
 				))}
-			</motion.svg>
+			</motion.svg> */}
 			<Outlet />
 		</>
 	)

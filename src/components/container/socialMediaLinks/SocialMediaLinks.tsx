@@ -8,7 +8,6 @@ import { motion } from "framer-motion"
 import "./socialmedialinks.scss"
 
 type Props = {
-	changeSide: boolean
 }
 
 const btnStyle = {
@@ -19,16 +18,9 @@ const btnStyle = {
 }
 
 const SocialMediaLinks = (props: Props) => {
-	const { changeSide } = props
 	return (
 		<motion.nav
 			className="nav-container"
-			style={{
-				alignItems: "start",
-				width: "fit-content",
-				alignSelf: "center",
-				height: "fit-content",
-			}}
 		>
 			<CustomLink
 				link="https://www.linkedin.com/in/%F0%9F%90%89-anthonin-colas-82ba65229/"
