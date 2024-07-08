@@ -9,6 +9,7 @@ import { EMPTY_POSITION, Position } from "./hooks/commonHooks"
 import _layout from "./pages/_layout"
 import Home from "./pages/home/Home"
 import { motion } from "framer-motion-3d"
+import { Canvas } from "@react-three/fiber"
 
 function App() {
 	const [handLandmarks, setHandLandmarks] = useState<HandLandmarks | undefined>(
@@ -59,14 +60,13 @@ function App() {
 
 	return (
 		<>
-			<MotionCanvas
-				// camera={{
-				// 	position: [0, 0, 750],
-				// 	fov: 100,
-				// 	near: 0.1,
-				// 	far: 1000,
-				//   receiveShadow: true,
-				// }}
+			<Canvas
+				camera={{
+					position: [0, 0, 750],
+					fov: 100,
+					near: 0.1,
+					far: 1000,
+				}}
 				dpr={[1, 2]}
 				style={{
 					position: "fixed",
@@ -78,15 +78,15 @@ function App() {
 						"radial-gradient(rgba(15, 34, 61, 1) 0%, rgba(0, 7, 33, 1) 100%, rgba(15, 33, 61, 1) 100%)",
 				}}
 			>
-				<OrbitControls
+				{/* <OrbitControls
 					maxPolarAngle={Math.PI}
 					minPolarAngle={0}
 					enableZoom={false}
 					enablePan={false}
 					enableRotate={enableRotate}
-				/>
+				/> */}
 				<StarField globalRef={globalRef} />
-			</MotionCanvas>
+			</Canvas>
 
 			<RouterProvider router={router} />
 		</>

@@ -1,12 +1,5 @@
-import React, { useEffect, useRef } from "react"
-import {
-	motion,
-	useAnimation,
-	useInView,
-	useScroll,
-	useTransform,
-} from "framer-motion"
-import GithubSVG from "../../components/svg/GithubSVG"
+import { motion, useMotionValue, useScroll } from "framer-motion"
+import { useEffect, useRef } from "react"
 import TechnoList from "../../components/container/degree/TechnoList"
 import AndroidSVG from "../../components/svg/techno/AndroidSVG"
 import AwsSVG from "../../components/svg/techno/AwsSVG"
@@ -19,7 +12,9 @@ import MySQLSVG from "../../components/svg/techno/MySQLSVG"
 import ReactSVG from "../../components/svg/techno/ReactSVG"
 import SpringSVG from "../../components/svg/techno/SpringSVG"
 import TypescriptSVG from "../../components/svg/techno/TypescriptSVG"
-import { DegreeItemProps } from "../../components/container/degree/DegreeItem"
+import AboutItem from "./AboutItem"
+
+import "./about.scss"
 
 const DevTechnoList = [
 	{
@@ -114,36 +109,24 @@ type Props = {}
 
 const About = (props: Props) => {
 	const topRef = useRef<HTMLDivElement>(null)
-	const firstSectionRef = useRef<HTMLDivElement>(null)
-	const controls = useAnimation()
-	const { scrollYProgress } = useScroll({
+	const { scrollYProgress, scrollY } = useScroll({
 		target: topRef,
-		offset: ["end end", "end start"],
 	})
+	const scrollV = useMotionValue(0)
 
-	const opacity = useTransform(scrollYProgress, [0, 1], [1, 0])
-  const position = useTransform(scrollYProgress, (pos) => {
-    return pos === 1 ? "fixed" : "relative"
-  })
+	useEffect(() => {
+		scrollYProgress.onChange((latest) => {
+			scrollV.set(latest * 100)
+			console.log(scrollV.get())
+		})
+	}, [scrollYProgress])
 
 	return (
-		<motion.section
-			ref={topRef}
-			className="container"
-			style={{
-				width: "50%",
-				margin: "0 auto",
-				marginBottom: "5rem",
-				position: "relative",
-				marginTop: "15rem",
-			}}
-		>
+		<motion.section className="container about-container" ref={topRef}>
 			<motion.h1
 				style={{
-					fontSize: "5rem",
 					fontWeight: "normal",
 				}}
-				className="sticky top-20 z-10"
 			>
 				About
 			</motion.h1>
@@ -154,7 +137,6 @@ const About = (props: Props) => {
 					flexDirection: "column",
 					gap: "1rem",
 					marginBottom: "10rem",
-          opacity
 				}}
 			>
 				<motion.div
@@ -167,8 +149,7 @@ const About = (props: Props) => {
 				>
 					<motion.h3
 						style={{
-							fontSize: "1.3rem",
-							fontWeight: "lighter",
+							fontWeight: "normal",
 							opacity: 0.5,
 						}}
 					>
@@ -184,14 +165,14 @@ const About = (props: Props) => {
 					/>
 					<motion.h3
 						style={{
-							fontSize: "1.5rem",
-							fontWeight: "lighter",
+							fontWeight: "normal",
 							flexShrink: 0,
 						}}
 					>
 						Tours, France
 					</motion.h3>
 				</motion.div>
+
 				<motion.div
 					style={{
 						display: "flex",
@@ -202,8 +183,7 @@ const About = (props: Props) => {
 				>
 					<motion.h3
 						style={{
-							fontSize: "1.3rem",
-							fontWeight: "lighter",
+							fontWeight: "normal",
 							opacity: 0.5,
 						}}
 					>
@@ -219,14 +199,14 @@ const About = (props: Props) => {
 					/>
 					<motion.h3
 						style={{
-							fontSize: "1.5rem",
-							fontWeight: "lighter",
+							fontWeight: "normal",
 							flexShrink: 0,
 						}}
 					>
 						3 years
 					</motion.h3>
 				</motion.div>
+
 				<motion.div
 					style={{
 						display: "flex",
@@ -237,8 +217,7 @@ const About = (props: Props) => {
 				>
 					<motion.h3
 						style={{
-							fontSize: "1.3rem",
-							fontWeight: "lighter",
+							fontWeight: "normal",
 							opacity: 0.5,
 						}}
 					>
@@ -254,8 +233,7 @@ const About = (props: Props) => {
 					/>
 					<motion.h3
 						style={{
-							fontSize: "1.5rem",
-							fontWeight: "lighter",
+							fontWeight: "normal",
 							flexShrink: 0,
 						}}
 					>
@@ -266,7 +244,6 @@ const About = (props: Props) => {
 				<motion.p
 					style={{
 						fontWeight: "normal",
-						fontSize: "1.5rem",
 						marginTop: "2rem",
 					}}
 				>
@@ -276,6 +253,16 @@ const About = (props: Props) => {
 					become a professional web developer. I'm now a fullstack developer and
 					i'm always looking for new challenges and opportunities to learn new
 					things.
+				</motion.p>
+				<motion.p
+					style={{
+						fontWeight: "normal",
+					}}
+				>
+					I'm a self-taught drummer who loves to play mainly metal and I've been
+					doing it for 4/5 years now. I play a lot of video game as well, mainly
+					Team based games like Counter Strike or Valorant, I love challenging
+					my self and push my limits.
 				</motion.p>
 			</motion.div>
 
@@ -297,124 +284,20 @@ const About = (props: Props) => {
 					>
 						Work experience
 					</motion.h2>
-					<motion.div
-						style={{
-							height: "1px",
-							maxWidth: "100%",
-							width: "100%",
-							backgroundColor: "#6F7FAC",
-						}}
+					<AboutItem
+						date="2023 - 2024"
+						technoList={prototyperTechnoList}
+						title="CTO - Developer fullstack TypeScript"
+						company="Startup Akrobate"
+						description="I've developed a total of 4 SaaS during my time here. They all come with their own APIs on the backend, and for one of the for one of the SaaS, a mobile application and of course, i've learned a lot about the management of a project and the importance of the product owner."
 					/>
-					<motion.div
-						style={{
-							display: "flex",
-							flexDirection: "row",
-							alignItems: "center",
-							gap: "5rem",
-						}}
-					>
-						<motion.div
-							style={{
-								flexShrink: 0,
-								alignSelf: "start",
-							}}
-						>
-							<motion.h3
-								style={{
-									fontSize: "1.7rem",
-									fontWeight: "lighter",
-									opacity: 0.5,
-								}}
-							>
-								2023 - 2024
-							</motion.h3>
-							<TechnoList technoList={prototyperTechnoList} />
-						</motion.div>
-						<motion.div>
-							<motion.h3
-								style={{
-									fontSize: "1.5rem",
-									fontWeight: "normal",
-									flexShrink: 0,
-								}}
-							>
-								CTO - Developer fullstack TypeScript
-							</motion.h3>
-							<motion.p
-								style={{
-									opacity: 0.5,
-									marginBottom: "1rem",
-								}}
-							>
-								Startup Akrobate
-							</motion.p>
-							<motion.p>
-								I've developed a total of 4 SaaS during my time here. They all
-								come with their own APIs on the backend, and for one of the for
-								one of the SaaS, a mobile application and of course, i've
-								learned a lot about the management of a project and the
-								importance of the product owner.
-							</motion.p>
-						</motion.div>
-					</motion.div>
-					<motion.div
-						style={{
-							height: "1px",
-							maxWidth: "100%",
-							width: "100%",
-							backgroundColor: "#6F7FAC",
-						}}
+					<AboutItem
+						date="3 mo. - 2023"
+						technoList={prototyperTechnoList}
+						title="Developer fullstack TypeScript"
+						company="Startup Prototyper"
+						description="I worked on Perfect Post, a copywriting tool for LinkedIn, and	on the migration of a WordPress site to Webflow with a back-end	using Strapi."
 					/>
-					<motion.div
-						style={{
-							display: "flex",
-							flexDirection: "row",
-							alignItems: "center",
-							gap: "5rem",
-						}}
-					>
-						<motion.div
-							style={{
-								flexShrink: 0,
-								alignSelf: "start",
-							}}
-						>
-							<motion.h3
-								style={{
-									fontSize: "1.7rem",
-									fontWeight: "lighter",
-									opacity: 0.5,
-								}}
-							>
-								3 mo. - 2023
-							</motion.h3>
-							<TechnoList technoList={prototyperTechnoList} />
-						</motion.div>
-						<motion.div>
-							<motion.h3
-								style={{
-									fontSize: "1.5rem",
-									fontWeight: "normal",
-									flexShrink: 0,
-								}}
-							>
-								Developer fullstack TypeScript
-							</motion.h3>
-							<motion.p
-								style={{
-									opacity: 0.5,
-									marginBottom: "1rem",
-								}}
-							>
-								Startup Prototyper
-							</motion.p>
-							<motion.p>
-								I worked on Perfect Post, a copywriting tool for LinkedIn, and
-								on the migration of a WordPress site to Webflow with a back-end
-								using Strapi.
-							</motion.p>
-						</motion.div>
-					</motion.div>
 					<motion.div
 						style={{
 							height: "1px",
@@ -441,123 +324,25 @@ const About = (props: Props) => {
 					>
 						Formation
 					</motion.h2>
-					<motion.div
-						style={{
-							height: "1px",
-							maxWidth: "100%",
-							width: "100%",
-							backgroundColor: "#6F7FAC",
-						}}
-					/>
-					<motion.div
-						style={{
-							display: "flex",
-							flexDirection: "row",
-							alignItems: "center",
-							gap: "5rem",
-						}}
-					>
-						<motion.div
-							style={{
-								flexShrink: 0,
-								alignSelf: "start",
-							}}
-						>
-							<motion.h3
-								style={{
-									fontSize: "1.7rem",
-									fontWeight: "lighter",
-									opacity: 0.5,
-								}}
-							>
-								2023 - 2024
-							</motion.h3>
-							<TechnoList technoList={CDATechnoList} />
-						</motion.div>
-						<motion.div>
-							<motion.h3
-								style={{
-									fontSize: "1.5rem",
-									fontWeight: "normal",
-									flexShrink: 0,
-								}}
-							>
-								Application designers and developers
-							</motion.h3>
-							<motion.p
-								style={{
-									opacity: 0.5,
-									marginBottom: "1rem",
-								}}
-							>
-								Cefim
-							</motion.p>
-							<motion.p>
-								During this training, I learn how to maintain and manage a
+					<AboutItem
+						date="2023 - 2024"
+						technoList={CDATechnoList}
+						title="Application designers and developers"
+						company="CEFIM"
+						description="During this training, I learn how to maintain and manage a
 								project from A to Z, from the design to the deployment with tool
 								for monitoring and testing. Docker, AWS, and Android
-								development.
-							</motion.p>
-						</motion.div>
-					</motion.div>
-					<motion.div
-						style={{
-							height: "1px",
-							maxWidth: "100%",
-							width: "100%",
-							backgroundColor: "#6F7FAC",
-						}}
+								development."
 					/>
-					<motion.div
-						style={{
-							display: "flex",
-							flexDirection: "row",
-							alignItems: "center",
-							gap: "5rem",
-						}}
-					>
-						<motion.div
-							style={{
-								flexShrink: 0,
-								alignSelf: "start",
-							}}
-						>
-							<motion.h3
-								style={{
-									fontSize: "1.7rem",
-									fontWeight: "lighter",
-									opacity: 0.5,
-								}}
-							>
-								2022 - 2023
-							</motion.h3>
-							<TechnoList technoList={DevTechnoList} />
-						</motion.div>
-						<motion.div>
-							<motion.h3
-								style={{
-									fontSize: "1.5rem",
-									fontWeight: "normal",
-									flexShrink: 0,
-								}}
-							>
-								Web developper and mobile
-							</motion.h3>
-							<motion.p
-								style={{
-									opacity: 0.5,
-									marginBottom: "1rem",
-								}}
-							>
-								Cefim
-							</motion.p>
-							<motion.p>
-								During this training, I learn web basic development like HTML,
+					<AboutItem
+						date="2022 - 2023"
+						technoList={DevTechnoList}
+						title="Web developper and mobile"
+						company="CEFIM"
+						description="During this training, I learn web basic development like HTML,
 								CSS, Javascript, React, PHP, SQL, and also how to use Figma for
-								design.
-							</motion.p>
-						</motion.div>
-					</motion.div>
+								design."
+					/>
 					<motion.div
 						style={{
 							height: "1px",

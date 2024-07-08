@@ -1,0 +1,17 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  padding-left: 5rem;
+  padding-right: 5rem;
+
+  @media screen and (max-width: 768px) {
+    padding: 2rem
+
+  }
+}

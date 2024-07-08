@@ -1,12 +1,6 @@
-import {
-  motion,
-  MotionValue,
-  useTransform
-} from "framer-motion"
-import { RefObject } from "react"
-import {
-  DegreeItemProps,
-} from "../../components/container/degree/DegreeItem"
+import { motion, MotionValue, useScroll, useTransform } from "framer-motion"
+import { RefObject, useEffect } from "react"
+import { DegreeItemProps } from "../../components/container/degree/DegreeItem"
 import Hero from "../../components/container/hero/Hero"
 import { HandLandmarks } from "../../components/cursor/CustomCursor"
 import AndroidSVG from "../../components/svg/techno/AndroidSVG"
@@ -22,7 +16,8 @@ import SpringSVG from "../../components/svg/techno/SpringSVG"
 import TypescriptSVG from "../../components/svg/techno/TypescriptSVG"
 import About from "../about/About"
 import "./home.scss"
-import { TextParallaxContentExample } from "../../components/projects/ParalaxTestComponent"
+import { TextParallaxContentExample } from "../../components/projects/ParalaxProject"
+import ContactMe from "../contactme/ContactMe"
 
 type HomeProps = {
 	handLandmarks: HandLandmarks | undefined
@@ -197,18 +192,15 @@ const Home = (props: HomeProps) => {
 					delay: 2.4,
 				},
 			}}
-			style={{
-				paddingLeft: "5rem",
-				paddingRight: "5rem",
-				position: "relative",
-			}}
+			className="main"
 		>
 			<Hero
 				handLandmarks={handLandmarks}
 				isHandTrackerHovered={isHandTrackerHovered}
 			/>
-      <TextParallaxContentExample />
+			<TextParallaxContentExample />
 			<About />
+			<ContactMe />
 		</motion.main>
 	)
 }

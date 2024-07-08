@@ -1,0 +1,9 @@
+.img_padding {
+  padding-right: 200;
+  padding-left: 200;
+
+  @media screen and (max-width: 768px) {
+    padding-right: 25;
+    padding-left: 25;
+  }
+}

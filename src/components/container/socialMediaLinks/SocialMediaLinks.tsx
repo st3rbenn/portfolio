@@ -7,8 +7,7 @@ import { motion } from "framer-motion"
 
 import "./socialmedialinks.scss"
 
-type Props = {
-}
+type Props = {}
 
 const btnStyle = {
 	background: "none",
@@ -19,9 +18,7 @@ const btnStyle = {
 
 const SocialMediaLinks = (props: Props) => {
 	return (
-		<motion.nav
-			className="nav-container"
-		>
+		<motion.nav className="nav-container">
 			<CustomLink
 				link="https://www.linkedin.com/in/%F0%9F%90%89-anthonin-colas-82ba65229/"
 				external

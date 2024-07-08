@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react"
-import HandTrackerToggler from "../../button/HandTrackerToggler"
+import { motion } from "framer-motion"
 import CustomLink from "../../common/Customlink"
 import HomeSVG from "../../svg/homeSVG"
 import SocialMediaLinks from "../socialMediaLinks/SocialMediaLinks"
-import { motion } from "framer-motion"
+
+import "./header.scss"
+import { useEffect, useState } from "react"
 
 type HeaderProps = {
 	isHandTrackerEnabled: boolean
@@ -18,27 +19,26 @@ const Header = (props: HeaderProps) => {
 		setIsHandTrackerEnabled,
 		setIsHandTrackerHovered,
 	} = props
+	const [scrollPosition, setScrollPosition] = useState(0)
+
+	const handleScroll = () => {
+		const position = window.scrollY
+		setScrollPosition(position)
+	}
+
+	useEffect(() => {
+		window.addEventListener("scroll", handleScroll, { passive: true })
+	}, [])
 
 	return (
 		<motion.header
-			style={{
-				position: "fixed",
-				top: "0",
-				left: "0",
-				right: "0",
-				zIndex: 100,
-				display: "grid",
-				gridTemplateColumns: "repeat(2, 1fr)",
-				gridTemplateRows: "1fr",
-				paddingLeft: "5rem",
-				paddingRight: "5rem",
-			}}
 			animate={{
 				opacity: [0, 1],
 				transition: {
 					delay: 2,
 				},
 			}}
+			className="header"
 		>
 			<CustomLink
 				link="/"

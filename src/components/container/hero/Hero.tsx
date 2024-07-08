@@ -30,9 +30,8 @@ const Hero = (props: Props) => {
 				left: 0,
 				right: 0,
 				bottom: 0,
-				height: "100vh",
-        marginLeft: "auto",
-        marginRight: "auto",
+				marginLeft: "auto",
+				marginRight: "auto",
 			}}
 		>
 			<motion.div className="section">

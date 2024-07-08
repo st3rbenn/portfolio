@@ -30,7 +30,6 @@ const linkStyle = {
 	textDecoration: "none",
 	color: "#E5F0FF",
 	display: "flex",
-	alignItems: "center",
 	justifyContent: "center",
 }
 
@@ -135,7 +134,6 @@ const CustomLink = (props: LinkProps) => {
 				style={{
 					...linkStyle,
 					flexDirection: "column",
-					cursor: "none",
 					gap: children ? "0.5rem" : "0",
 				}}
 			>
