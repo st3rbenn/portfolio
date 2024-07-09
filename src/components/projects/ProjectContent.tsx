@@ -1,34 +1,70 @@
 import { FiArrowUpRight } from "react-icons/fi"
 import TechnoList, { TechnoListItem } from "../container/degree/TechnoList"
+import CustomLink from "../common/Customlink"
+
+import "./projectContent.scss"
 
 type ProjectContentProps = {
 	title: string
 	firstParagraph: string
 	secondParagraph: string
 	technoList: TechnoListItem[]
+	githubLink: string
+	demoLink: string
 }
 
 const ProjectContent = (props: ProjectContentProps) => {
-	const { title, firstParagraph, secondParagraph, technoList } = props
+	const {
+		title,
+		firstParagraph,
+		secondParagraph,
+		technoList,
+		githubLink,
+		demoLink,
+	} = props
 	return (
 		<div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 pb-24 pt-12 md:grid-cols-12">
 			<div className="col-span-1  md:col-span-4">
 				<h2 className="text-3xl font-bold">{title}</h2>
-				<div
-					style={{
-						width: "fit-content",
-            marginTop: "1rem",
-					}}
-				>
-					<h4
-						className="font-bold"
-						style={{
-							paddingLeft: "1rem",
-						}}
-					>
-						Techno:
-					</h4>
-					<TechnoList technoList={technoList} />
+				<div className="projectSection">
+					<h4 className="font-bold w-fit">Techno:</h4>
+					<TechnoList technoList={technoList} noPadding noGrid />
+					{githubLink && (
+						<CustomLink
+							link={githubLink}
+							external
+							textDecoration="underline"
+							style={{
+								width: "fit-content",
+							}}
+						>
+							<p
+								style={{
+									fontWeight: "normal",
+								}}
+							>
+								Source code
+							</p>
+						</CustomLink>
+					)}
+					{demoLink && (
+						<CustomLink
+							link={demoLink}
+							external
+							textDecoration="underline"
+							style={{
+								width: "fit-content",
+							}}
+						>
+							<p
+								style={{
+									fontWeight: "normal",
+								}}
+							>
+								Demo
+							</p>
+						</CustomLink>
+					)}
 				</div>
 			</div>
 			<div className="col-span-1 md:col-span-8">

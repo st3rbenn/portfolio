@@ -1,5 +1,5 @@
-import { motion, useScroll, useTransform } from "framer-motion"
-import { useRef } from "react"
+import { motion, useAnimate, useScroll, useTransform } from "framer-motion"
+import { useEffect, useRef } from "react"
 import { HandLandmarks } from "../../cursor/CustomCursor"
 import HeadAnimation from "../../handtracker/HeadAnimation"
 
@@ -18,12 +18,16 @@ const Hero = (props: Props) => {
 
 	const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0])
 	const scaleOut = useTransform(scrollYProgress, [0, 0.7], [1, 0.7])
+	const zIndex = useTransform(scrollYProgress, (pos) => {
+		return pos > 0.7 ? -1 : 1
+	})
+
 	return (
 		<motion.section
 			className="container"
 			ref={homeRef}
 			style={{
-				opacity,
+				opacity: opacity,
 				scale: scaleOut,
 				position: "fixed",
 				top: 0,
@@ -32,6 +36,7 @@ const Hero = (props: Props) => {
 				bottom: 0,
 				marginLeft: "auto",
 				marginRight: "auto",
+				zIndex,
 			}}
 		>
 			<motion.div className="section">

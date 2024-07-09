@@ -115,9 +115,8 @@ const About = (props: Props) => {
 	const scrollV = useMotionValue(0)
 
 	useEffect(() => {
-		scrollYProgress.onChange((latest) => {
+		scrollYProgress.on("change", (latest) => {
 			scrollV.set(latest * 100)
-			console.log(scrollV.get())
 		})
 	}, [scrollYProgress])
 

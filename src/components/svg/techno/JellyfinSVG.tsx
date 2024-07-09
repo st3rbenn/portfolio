@@ -15,11 +15,11 @@ function JellyfinSVG(props: JellyfinSVGProps) {
 			fill="#ffffff"
 			stroke="#ffffff"
 		>
-			<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+			<g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
 			<g
 				id="SVGRepo_tracerCarrier"
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeLinecap="round"
+				strokeLinejoin="round"
 			></g>
 			<g id="SVGRepo_iconCarrier">
 				<rect width="512" height="512" rx="15%" fill="#ffffff"></rect>
@@ -36,8 +36,8 @@ function JellyfinSVG(props: JellyfinSVGProps) {
 						x2="457.68"
 						y2="410.73"
 					>
-						<stop offset="0%" stop-color="#aa5cc3"></stop>
-						<stop offset="100%" stop-color="#00a4dc"></stop>
+						<stop offset="0%" stopColor="#aa5cc3"></stop>
+						<stop offset="100%" stopColor="#00a4dc"></stop>
 					</linearGradient>
 					<path
 						d="M58.75 417.03c25.97 52.15 368.86 51.55 394.55 0S308.93 56.08 256.03 56.08c-52.92 0-223.25 308.8-197.28 360.95zm68.04-45.25c-17.02-34.17 94.6-236.5 129.26-236.5 34.67 0 146.1 202.7 129.26 236.5-16.83 33.8-241.5 34.17-258.52 0z"
@@ -47,16 +47,16 @@ function JellyfinSVG(props: JellyfinSVGProps) {
 				<use xlinkHref="#A" fill="url(#B)"></use>
 				<use
 					xlinkHref="#A"
-					fill-opacity="0"
+					fillOpacity="0"
 					stroke="#000000"
-					stroke-opacity="0"
+					strokeOpacity="0"
 				></use>
 				<use xlinkHref="#C" fill="url(#B)"></use>
 				<use
 					xlinkHref="#C"
-					fill-opacity="0"
+					fillOpacity="0"
 					stroke="#000000"
-					stroke-opacity="0"
+					strokeOpacity="0"
 				></use>
 			</g>
 		</svg>

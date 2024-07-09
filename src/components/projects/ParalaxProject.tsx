@@ -8,37 +8,67 @@ import GithubSVG from "../svg/techno/GithubSVG"
 import AwsSVG from "../svg/techno/AwsSVG"
 import PlexSVG from "../svg/techno/PlexSVG"
 import JellyfinSVG from "../svg/techno/JellyfinSVG"
+import ReduxSVG from "../svg/techno/ReduxSVG"
+import DockerSVG from "../svg/techno/DockerSVG"
+import RedisSVG from "../svg/techno/RedisSVG"
+import BashSVG from "../svg/techno/BashSVG"
 
-const GratflixTechnoList: TechnoListItem[] = 
-[
-  {
-    name: "React",
-    icon: ReactSVG,
-  },
-  {
-    name: "Typescript",
-    icon: TypescriptSVG,
-  },
-  {
-    name: "Github",
-    icon: GithubSVG,
-  },
-  {
-    name: "Plex",
-    icon: PlexSVG,
-  },
-  {
-    name: "Jellyfin",
-    icon: JellyfinSVG,
-  },
-  {
-    name: "AWS",
-    icon: AwsSVG,
-  },
-  // {
-  //   name: "Redux",
-  //   icon: ReduxSVG
-  // }
+const GratflixTechnoList: TechnoListItem[] = [
+	{
+		name: "React",
+		icon: ReactSVG,
+	},
+	{
+		name: "Typescript",
+		icon: TypescriptSVG,
+	},
+	{
+		name: "Github",
+		icon: GithubSVG,
+	},
+	{
+		name: "Plex",
+		icon: PlexSVG,
+	},
+	{
+		name: "Jellyfin",
+		icon: JellyfinSVG,
+	},
+	{
+		name: "AWS",
+		icon: AwsSVG,
+	},
+	{
+		name: "Redux",
+		icon: ReduxSVG,
+	},
+]
+
+const BreakEmuTechnoList: TechnoListItem[] = [
+	{
+		name: "Typescript",
+		icon: TypescriptSVG,
+	},
+	{
+		name: "Github",
+		icon: GithubSVG,
+	},
+	{
+		name: "AWS",
+		icon: AwsSVG,
+	},
+	{
+		name: "Redis",
+		icon: RedisSVG,
+	},
+	{
+		name: "Docker",
+		icon: DockerSVG,
+	},
+	{
+		name: "Bash",
+		icon: BashSVG,
+	},
 ]
 
 export const TextParallaxContentExample = () => {
@@ -69,7 +99,9 @@ export const TextParallaxContentExample = () => {
 					title="Gratflix"
 					firstParagraph="Gratflix is a web application that allows you to browse your Plex or Jellyfin library and watch movies or series. The goal was to re create the famous Netflix UI with a Plex or Jellyfin backend. The project is made with React and TypeScript."
 					secondParagraph="I did this project during my first year at CEFIM. We had to produce a project for the jury at the end of the year. I chose to do this project because I wanted to learn more about React and TypeScript. It enabled me to be one of the first in my class and to be congratulated by the jury."
-          technoList={GratflixTechnoList}
+					technoList={GratflixTechnoList}
+					githubLink="https://github.com/st3rbenn/Gratflix-web"
+					demoLink=""
 				/>
 			</TextParallaxContent>
 			<TextParallaxContent
@@ -81,7 +113,9 @@ export const TextParallaxContentExample = () => {
 					title="BreakEmu"
 					firstParagraph="BreakEmu is a Dofus emulator in TypeScript with a focus on performance and scalability. The project is made with TypeScript and Node.js with Redis. I made a PWA with React to manage the server, different tools for managing game files, features etc."
 					secondParagraph="Why i have made this project ? I have made this project to learn more about the game server architecture and to create a server that can handle thousands of players. I have also made this project to learn more about TypeScript, Node.js and Redis ."
-          technoList={GratflixTechnoList}
+					technoList={BreakEmuTechnoList}
+					githubLink="https://github.com/st3rbenn/BreakEmu-2.69"
+					demoLink=""
 				/>
 			</TextParallaxContent>
 		</div>
@@ -101,8 +135,6 @@ const TextParallaxContent = ({
 		window.addEventListener("resize", handleResize)
 		return () => window.removeEventListener("resize", handleResize)
 	}, [])
-
-	const maxHeight = screenWidth > 768 ? "150vh" : "150vh"
 
 	return (
 		<div

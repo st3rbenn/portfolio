@@ -1,9 +1,8 @@
-.img_padding {
-  padding-right: 200;
-  padding-left: 200;
-
-  @media screen and (max-width: 768px) {
-    padding-right: 25;
-    padding-left: 25;
-  }
+.projectSection {
+	width: fit-content;
+	margin-top: 1rem;
+	margin-left: 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
 }

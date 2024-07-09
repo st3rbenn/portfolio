@@ -8,7 +8,7 @@ import React, { useEffect, useRef } from "react"
 import { Link, NavigateOptions, useNavigate } from "react-router-dom"
 
 type LinkProps = {
-	children: React.ReactNode
+	children?: React.ReactNode
 	style?: React.CSSProperties
 	onHoverStart?: () => void
 	onHoverEnd?: () => void
@@ -24,10 +24,10 @@ type LinkProps = {
 	elemAsAnim?: boolean
 	backHome?: boolean
 	navigationOpt?: NavigateOptions
+  textDecoration?: string
 }
 
 const linkStyle = {
-	textDecoration: "none",
 	color: "#E5F0FF",
 	display: "flex",
 	justifyContent: "center",
@@ -51,6 +51,7 @@ const CustomLink = (props: LinkProps) => {
 		elemAsAnim = false,
 		backHome = false,
 		navigationOpt,
+    textDecoration
 	} = props
 	const linkRef = useRef<HTMLDivElement>(null)
 	const navigate = useNavigate()
@@ -135,6 +136,7 @@ const CustomLink = (props: LinkProps) => {
 					...linkStyle,
 					flexDirection: "column",
 					gap: children ? "0.5rem" : "0",
+          textDecoration: textDecoration,
 				}}
 			>
 				{children}

@@ -15,7 +15,6 @@ const Tooltip = (props: Props) => {
 	const handleMouseEnter = () => {
 		const tooltipElement = tooltipRef.current
 		const childrenElement = childrenRef.current
-		console.log(tooltipElement, childrenElement)
 
 		if (tooltipElement && childrenElement) {
 			tooltipElement.style.display = "block"
