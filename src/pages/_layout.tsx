@@ -12,6 +12,7 @@ import { Position } from "../hooks/commonHooks"
 import { Outlet } from "react-router-dom"
 import { isMobile } from "react-device-detect"
 import { motion } from "framer-motion"
+import i18next from "i18next"
 
 type _layoutProps = {
 	handLandmarks: HandLandmarks | undefined
@@ -21,7 +22,9 @@ type _layoutProps = {
 	isHandTrackerEnabled: boolean
 	setIsHandTrackerEnabled: (isHandTrackerEnabled: boolean) => void
 	setIsHandTrackerHovered: (isHandTrackerHovered: boolean) => void
-	bodyRef: RefObject<HTMLDivElement>
+	bodyRef: RefObject<HTMLDivElement>,
+  language: string,
+  setLanguage: Dispatch<SetStateAction<string>>
 }
 
 const fadeOutCircleClick = {
@@ -44,14 +47,16 @@ const _layout = (props: _layoutProps) => {
 		isHandTrackerEnabled,
 		setIsHandTrackerEnabled,
 		setIsHandTrackerHovered,
+    language,
+    setLanguage,
 		bodyRef,
 	} = props
 	const [circles, setCircles] = useState<
 		{ x: number; y: number; key: number }[]
 	>([])
 
-  const svgRef = useRef<SVGSVGElement>(null)
-  let throttle: NodeJS.Timeout
+	const svgRef = useRef<SVGSVGElement>(null)
+	let throttle: NodeJS.Timeout
 
 	const handleAddCircle = (e: MouseEvent) => {
 		const newCircle = {
@@ -62,34 +67,36 @@ const _layout = (props: _layoutProps) => {
 		setCircles((prevCircles) => [...prevCircles, newCircle])
 	}
 
-  const handleRemoveCircle = (key: number) => {
-    setCircles((prevCircles) => prevCircles.filter((circle) => circle.key !== key))
+	const handleRemoveCircle = (key: number) => {
+		setCircles((prevCircles) =>
+			prevCircles.filter((circle) => circle.key !== key)
+		)
 
-    if(svgRef.current) {
-      const svg = svgRef.current
-      const circle = svg.querySelector(`[key="${key}"]`)
-      if(circle) {
-        svg.removeChild(circle)
-      }
-    }
-  }
+		if (svgRef.current) {
+			const svg = svgRef.current
+			const circle = svg.querySelector(`[key="${key}"]`)
+			if (circle) {
+				svg.removeChild(circle)
+			}
+		}
+	}
 
 	useEffect(() => {
 		window.addEventListener("click", handleAddCircle)
 		return () => window.removeEventListener("click", handleAddCircle)
 	}, [])
 
-  useEffect(() => {
-    //use a debounce for waiting the user to stop clicking before removing the circle
-    
-    if(circles.length > 0) {
-      clearTimeout(throttle)
-      throttle = setTimeout(() => {
-        const key = circles[circles.length - 1].key
-        handleRemoveCircle(key)
-      }, 500)
-    }
-  }, [circles])
+	useEffect(() => {
+		//use a debounce for waiting the user to stop clicking before removing the circle
+
+		if (circles.length > 0) {
+			clearTimeout(throttle)
+			throttle = setTimeout(() => {
+				const key = circles[circles.length - 1].key
+				handleRemoveCircle(key)
+			}, 500)
+		}
+	}, [circles])
 
 	return (
 		<>
@@ -97,6 +104,8 @@ const _layout = (props: _layoutProps) => {
 				isHandTrackerEnabled={isHandTrackerEnabled}
 				setIsHandTrackerEnabled={setIsHandTrackerEnabled}
 				setIsHandTrackerHovered={setIsHandTrackerHovered}
+        language={language}
+        setLanguage={setLanguage}
 			/>
 			{/* {!isMobile && (
 				<CustomCursor

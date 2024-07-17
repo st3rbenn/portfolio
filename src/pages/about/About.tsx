@@ -15,6 +15,7 @@ import TypescriptSVG from "../../components/svg/techno/TypescriptSVG"
 import AboutItem from "./AboutItem"
 
 import "./about.scss"
+import { useTranslation } from "react-i18next"
 
 const DevTechnoList = [
 	{
@@ -113,6 +114,7 @@ const About = (props: Props) => {
 		target: topRef,
 	})
 	const scrollV = useMotionValue(0)
+	const { t } = useTranslation()
 
 	useEffect(() => {
 		scrollYProgress.on("change", (latest) => {
@@ -127,7 +129,7 @@ const About = (props: Props) => {
 					fontWeight: "normal",
 				}}
 			>
-				About
+				{t("translation.about.title")}
 			</motion.h1>
 
 			<motion.div
@@ -152,7 +154,7 @@ const About = (props: Props) => {
 							opacity: 0.5,
 						}}
 					>
-						Location
+						{t("translation.about.location")}
 					</motion.h3>
 					<motion.div
 						style={{
@@ -186,7 +188,7 @@ const About = (props: Props) => {
 							opacity: 0.5,
 						}}
 					>
-						Experience
+						{t("translation.about.experience")}
 					</motion.h3>
 					<motion.div
 						style={{
@@ -202,7 +204,7 @@ const About = (props: Props) => {
 							flexShrink: 0,
 						}}
 					>
-						3 years
+						2 {t("translation.about.years")}
 					</motion.h3>
 				</motion.div>
 
@@ -220,7 +222,7 @@ const About = (props: Props) => {
 							opacity: 0.5,
 						}}
 					>
-						Hireable
+						{t("translation.about.hireable")}
 					</motion.h3>
 					<motion.div
 						style={{
@@ -246,22 +248,14 @@ const About = (props: Props) => {
 						marginTop: "2rem",
 					}}
 				>
-					From an old idea i had when i was young to a real passion, i've always
-					been interested in the web and its technologies. I started to learn
-					web development by myself and then i decided to follow a training to
-					become a professional web developer. I'm now a fullstack developer and
-					i'm always looking for new challenges and opportunities to learn new
-					things.
+					{t("translation.about.firstParagraph")}
 				</motion.p>
 				<motion.p
 					style={{
 						fontWeight: "normal",
 					}}
 				>
-					I'm a self-taught drummer who loves to play mainly metal and I've been
-					doing it for 4/5 years now. I play a lot of video game as well, mainly
-					Team based games like Counter Strike or Valorant, I love challenging
-					my self and push my limits.
+					{t("translation.about.secondParagraph")}
 				</motion.p>
 			</motion.div>
 
@@ -281,21 +275,21 @@ const About = (props: Props) => {
 							opacity: 0.5,
 						}}
 					>
-						Work experience
+						{t("translation.about.work.title")}
 					</motion.h2>
 					<AboutItem
 						date="2023 - 2024"
 						technoList={prototyperTechnoList}
 						title="CTO - Developer fullstack TypeScript"
 						company="Startup Akrobate"
-						description="I've developed a total of 4 SaaS during my time here. They all come with their own APIs on the backend, and for one of the for one of the SaaS, a mobile application and of course, i've learned a lot about the management of a project and the importance of the product owner."
+						description={t("translation.about.work.akrobate.description")}
 					/>
 					<AboutItem
 						date="3 mo. - 2023"
 						technoList={prototyperTechnoList}
 						title="Developer fullstack TypeScript"
 						company="Startup Prototyper"
-						description="I worked on Perfect Post, a copywriting tool for LinkedIn, and	on the migration of a WordPress site to Webflow with a back-end	using Strapi."
+						description={t("translation.about.work.prototyper.description")}
 					/>
 					<motion.div
 						style={{
@@ -326,21 +320,16 @@ const About = (props: Props) => {
 					<AboutItem
 						date="2023 - 2024"
 						technoList={CDATechnoList}
-						title="Application designers and developers"
+						title={t("translation.about.formation.cda.title")}
 						company="CEFIM"
-						description="During this training, I learn how to maintain and manage a
-								project from A to Z, from the design to the deployment with tool
-								for monitoring and testing. Docker, AWS, and Android
-								development."
+						description={t("translation.about.formation.cda.description")}
 					/>
 					<AboutItem
 						date="2022 - 2023"
 						technoList={DevTechnoList}
-						title="Web developper and mobile"
+						title={t("translation.about.formation.devweb.title")}
 						company="CEFIM"
-						description="During this training, I learn web basic development like HTML,
-								CSS, Javascript, React, PHP, SQL, and also how to use Figma for
-								design."
+						description={t("translation.about.formation.devweb.description")}
 					/>
 					<motion.div
 						style={{

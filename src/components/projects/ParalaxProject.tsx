@@ -12,6 +12,7 @@ import ReduxSVG from "../svg/techno/ReduxSVG"
 import DockerSVG from "../svg/techno/DockerSVG"
 import RedisSVG from "../svg/techno/RedisSVG"
 import BashSVG from "../svg/techno/BashSVG"
+import { useTranslation } from "react-i18next"
 
 const GratflixTechnoList: TechnoListItem[] = [
 	{
@@ -71,8 +72,9 @@ const BreakEmuTechnoList: TechnoListItem[] = [
 	},
 ]
 
-export const TextParallaxContentExample = () => {
+export const ParallaxProject = () => {
 	const ref = useRef<HTMLDivElement | null>(null)
+	const { t } = useTranslation()
 
 	return (
 		<div
@@ -88,17 +90,17 @@ export const TextParallaxContentExample = () => {
 					marginBottom: "5rem",
 				}}
 			>
-				Projects
+				{t("translation.project.title")}
 			</motion.h1>
 			<TextParallaxContent
 				imgUrl="https://i.postimg.cc/T1JD5j5d/Capture-d-e-cran-2024-06-29-a-14-32-44.png"
 				subheading="Gratflix"
-				heading="UI Implementation for Plex or Jellyfin"
+				heading={t("translation.project.gratflix.title")}
 			>
 				<ProjectContent
 					title="Gratflix"
-					firstParagraph="Gratflix is a web application that allows you to browse your Plex or Jellyfin library and watch movies or series. The goal was to re create the famous Netflix UI with a Plex or Jellyfin backend. The project is made with React and TypeScript."
-					secondParagraph="I did this project during my first year at CEFIM. We had to produce a project for the jury at the end of the year. I chose to do this project because I wanted to learn more about React and TypeScript. It enabled me to be one of the first in my class and to be congratulated by the jury."
+					firstParagraph={t("translation.project.gratflix.firstParagraph")}
+					secondParagraph={t("translation.project.gratflix.secondParagraph")}
 					technoList={GratflixTechnoList}
 					githubLink="https://github.com/st3rbenn/Gratflix-web"
 					demoLink=""
@@ -107,12 +109,12 @@ export const TextParallaxContentExample = () => {
 			<TextParallaxContent
 				imgUrl="https://i.postimg.cc/CMWttJ9B/Capture-d-e-cran-2024-01-05-a-23-46-21.png"
 				subheading="BreakEmu"
-				heading="Dofus emulator in TypeScript"
+				heading={t("translation.project.breakemu.title")}
 			>
 				<ProjectContent
 					title="BreakEmu"
-					firstParagraph="BreakEmu is a Dofus emulator in TypeScript with a focus on performance and scalability. The project is made with TypeScript and Node.js with Redis. I made a PWA with React to manage the server, different tools for managing game files, features etc."
-					secondParagraph="Why i have made this project ? I have made this project to learn more about the game server architecture and to create a server that can handle thousands of players. I have also made this project to learn more about TypeScript, Node.js and Redis ."
+					firstParagraph={t("translation.project.breakemu.firstParagraph")}
+					secondParagraph={t("translation.project.breakemu.secondParagraph")}
 					technoList={BreakEmuTechnoList}
 					githubLink="https://github.com/st3rbenn/BreakEmu-2.69"
 					demoLink=""

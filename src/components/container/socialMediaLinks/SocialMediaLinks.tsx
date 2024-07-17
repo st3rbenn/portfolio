@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import CustomLink from "../../common/Customlink"
 import GithubSVG from "../../svg/GithubSVG"
 import LinkedinSVG from "../../svg/LinkedinSVG"
@@ -6,8 +6,13 @@ import MailSVG from "../../svg/MailSVG"
 import { motion } from "framer-motion"
 
 import "./socialmedialinks.scss"
+import CustomButton from "../../common/CustomButton"
+import i18next from "i18next"
 
-type Props = {}
+type Props = {
+	language: string
+	setLanguage: Dispatch<SetStateAction<string>>
+}
 
 const btnStyle = {
 	background: "none",
@@ -17,6 +22,13 @@ const btnStyle = {
 }
 
 const SocialMediaLinks = (props: Props) => {
+	const { language, setLanguage } = props
+
+	const handleChangeLanguage = async () => {
+		setLanguage(language === "fr" ? "en" : language === "en" ? "fr" : "en")
+
+		i18next.changeLanguage(language === "fr" ? "en" : "fr")
+	}
 	return (
 		<motion.nav className="nav-container">
 			<CustomLink
@@ -46,6 +58,16 @@ const SocialMediaLinks = (props: Props) => {
 			>
 				<MailSVG />
 			</CustomLink>
+
+			<CustomButton
+				onClick={handleChangeLanguage}
+				style={{
+					fontSize: "2rem",
+          marginTop: "0.5rem"
+				}}
+			>
+				{language === "fr" ? "🇺🇸" : "🇫🇷"}
+			</CustomButton>
 		</motion.nav>
 	)
 }

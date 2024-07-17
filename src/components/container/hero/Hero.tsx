@@ -2,6 +2,8 @@ import { motion, useAnimate, useScroll, useTransform } from "framer-motion"
 import { useEffect, useRef } from "react"
 import { HandLandmarks } from "../../cursor/CustomCursor"
 import HeadAnimation from "../../handtracker/HeadAnimation"
+import { FiArrowDown } from "react-icons/fi"
+import { useTranslation } from "react-i18next"
 
 type Props = {
 	handLandmarks: HandLandmarks | undefined
@@ -9,6 +11,7 @@ type Props = {
 }
 
 const Hero = (props: Props) => {
+  const {t} = useTranslation()
 	const { handLandmarks, isHandTrackerHovered } = props
 	const homeRef = useRef<HTMLDivElement>(null)
 	const { scrollYProgress } = useScroll({
@@ -27,8 +30,6 @@ const Hero = (props: Props) => {
 			className="container"
 			ref={homeRef}
 			style={{
-				opacity: opacity,
-				scale: scaleOut,
 				position: "fixed",
 				top: 0,
 				left: 0,
@@ -39,7 +40,13 @@ const Hero = (props: Props) => {
 				zIndex,
 			}}
 		>
-			<motion.div className="section">
+			<motion.div
+				className="section"
+				style={{
+					opacity: opacity,
+					scale: scaleOut,
+				}}
+			>
 				<HeadAnimation
 					handLandmarks={handLandmarks}
 					isHandTrackerHovered={isHandTrackerHovered}
@@ -47,7 +54,13 @@ const Hero = (props: Props) => {
 						paddingLeft: "2.5rem",
 					}}
 				/>
-				<motion.h1>Welcome !</motion.h1>
+				<motion.h1
+					style={{
+						fontWeight: "300",
+					}}
+				>
+          {t("translation.home.welcome")}
+				</motion.h1>
 				<motion.div className="section__name">
 					<motion.p
 						style={{
@@ -56,7 +69,7 @@ const Hero = (props: Props) => {
 							paddingRight: "0.5rem",
 						}}
 					>
-						i'm
+						{t("translation.home.im")}
 					</motion.p>
 					<motion.h1
 						style={{
@@ -68,11 +81,22 @@ const Hero = (props: Props) => {
 					</motion.h1>
 				</motion.div>
 				<motion.p className="section__quote">
-					a junior french developer who like baking websites like a baker making
-					is bread with ♥️ and passion
+					{t("translation.home.quote")}
 				</motion.p>
 			</motion.div>
 			{/* <NavigationBar /> */}
+			<FiArrowDown
+				className="arrow"
+				style={{
+					position: "absolute",
+					bottom: "2rem",
+					left: "50%",
+					transform: "translateX(-50%)",
+					fontSize: "2rem",
+					color: "#6F7FAC",
+				}}
+				size={30}
+			/>
 		</motion.section>
 	)
 }

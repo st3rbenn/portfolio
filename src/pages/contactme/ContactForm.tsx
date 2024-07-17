@@ -2,6 +2,8 @@ import React, { useState } from "react"
 import { motion } from "framer-motion"
 import { Formik, Form, Field, ErrorMessage, FormikConfig } from "formik"
 import FormField from "../../components/form/FormField"
+import emailjs from "@emailjs/browser"
+import { useTranslation } from "react-i18next"
 
 type Props = {}
 
@@ -11,7 +13,12 @@ type Form = {
 	message: string
 }
 
+emailjs.init({
+	publicKey: process.env.REACT_APP_EMAIL_JS_PROVIDER_KEY,
+})
+
 const ContactForm = (props: Props) => {
+	const { t } = useTranslation()
 	const initialValues = {
 		name: "",
 		email: "",
@@ -39,20 +46,23 @@ const ContactForm = (props: Props) => {
 		return errors
 	}
 
-	// const handleChange = (
-	// 	e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-	// ) => {
-	// 	setForm({
-	// 		...form,
-	// 		[e.target.name]: e.target.value,
-	// 	})
-	// }
-
-	const handleSubmit = (
+	const handleSubmit = async (
 		values: Form,
 		setSubmitting: (isSubmitting: boolean) => void
 	) => {
-		console.log(values)
+		const emailResp = await emailjs.send(
+			process.env.REACT_APP_EMAIL_JS_SERVICE_ID as string,
+			process.env.REACT_APP_EMAIL_JS_TEMPLATE_ID as string,
+			{
+				name: values.name,
+				message: values.message,
+				from: values.email,
+			}
+		)
+
+		if (emailResp.status !== 200) {
+			console.error("Error sending email")
+		}
 
 		setSubmitting(false)
 	}
@@ -81,19 +91,23 @@ const ContactForm = (props: Props) => {
 							gap: "1rem",
 						}}
 					>
-						<FormField type="text" name="name" label="name" />
-						<FormField type="email" name="email" label="email" />
+						<FormField
+							type="text"
+							name="name"
+							label={t("translation.contact.form.name")}
+						/>
+						<FormField type="email" name="email" label={t("translation.contact.form.email")} />
 					</div>
-					<FormField as="textarea" type="" name="message" label="message" />
+					<FormField as="textarea" type="" name="message" label={t("translation.contact.form.message")} />
 					<motion.button
 						type="submit"
 						className="submit"
 						style={{
 							alignSelf: "end",
 						}}
-            disabled={isSubmitting}
+						disabled={isSubmitting}
 					>
-						Submit
+						{t("translation.contact.form.send")}
 					</motion.button>
 				</Form>
 			)}

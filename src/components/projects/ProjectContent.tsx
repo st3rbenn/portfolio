@@ -3,6 +3,7 @@ import TechnoList, { TechnoListItem } from "../container/degree/TechnoList"
 import CustomLink from "../common/Customlink"
 
 import "./projectContent.scss"
+import { useTranslation } from "react-i18next"
 
 type ProjectContentProps = {
 	title: string
@@ -22,12 +23,13 @@ const ProjectContent = (props: ProjectContentProps) => {
 		githubLink,
 		demoLink,
 	} = props
+  const {t} = useTranslation()
 	return (
 		<div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 pb-24 pt-12 md:grid-cols-12">
 			<div className="col-span-1  md:col-span-4">
 				<h2 className="text-3xl font-bold">{title}</h2>
 				<div className="projectSection">
-					<h4 className="font-bold w-fit">Techno:</h4>
+					<h4 className="font-bold w-fit">Stack:</h4>
 					<TechnoList technoList={technoList} noPadding noGrid />
 					{githubLink && (
 						<CustomLink
@@ -43,7 +45,7 @@ const ProjectContent = (props: ProjectContentProps) => {
 									fontWeight: "normal",
 								}}
 							>
-								Source code
+								{t("translation.projectContent.github")}
 							</p>
 						</CustomLink>
 					)}

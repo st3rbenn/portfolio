@@ -2,10 +2,12 @@ import { motion } from "framer-motion"
 import ContactForm from "./ContactForm"
 
 import "./contact.scss"
+import { useTranslation } from "react-i18next"
 
 type Props = {}
 
 const ContactMe = (props: Props) => {
+  const {t} = useTranslation()
 	return (
 		<motion.section className="contact_container">
 			<motion.div>
@@ -15,16 +17,14 @@ const ContactMe = (props: Props) => {
 						alignSelf: "center",
 					}}
 				>
-					Let's talk
+					{t("translation.contact.title")}
 				</motion.h1>
 				<motion.p
 					style={{
 						fontWeight: "normal",
 					}}
 				>
-					Feel free to contact me any time for any questions or inquiries. I'm
-					always open to new opportunities and collaborations and i'm currently
-					looking for a job as a web developer.
+					{t("translation.contact.description")}
 				</motion.p>
 			</motion.div>
 			<ContactForm />

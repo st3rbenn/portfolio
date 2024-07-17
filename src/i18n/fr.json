@@ -1,0 +1,69 @@
+{
+	"translation": {
+		"home": {
+			"welcome": "Bienvenue !",
+			"im": "Je suis",
+			"quote": "Je suis un jeune développeur français qui aime concevoir des sites web, tout comme un boulanger façonne son pain avec ♥️ et passion."
+		},
+		"project": {
+			"title": "Projets",
+			"gratflix": {
+				"title": "Implémentation UI pour Plex ou Jellyfin",
+				"firstParagraph": "Gratflix est une application web qui permet de naviguer dans votre bibliothèque Plex ou Jellyfin et de regarder des films ou des séries. L'objectif était de reproduire l'interface utilisateur emblématique de Netflix en utilisant l'API de votre serveur Plex ou Jellyfin. Le projet a été réalisé avec React et TypeScript.",
+				"secondParagraph": "J'ai réalisé ce projet lors de ma première année au CEFIM. Nous devions présenter un projet au jury à la fin de l'année alors j'ai choisi de développer ce projet car je voulais en apprendre davantage sur React et TypeScript. Cela m'a permis d'être parmi les meilleurs étudiants de ma classe et d'être félicité par le jury."
+			},
+			"breakemu": {
+				"title": "Émulateur Dofus en TypeScript",
+				"firstParagraph": "BreakEmu est un émulateur de Dofus écrit en TypeScript. L'objectif était de créer un émulateur de Dofus en TypeScript pour mieux comprendre l'architecture du jeu et améliorer mes compétences en TypeScript. Le projet est développé avec TypeScript, Node.js et Redis. J'ai aussi créé une PWA avec React pour gérer le serveur, ainsi que divers outils pour gérer les fichiers de jeu, les fonctionnalités, etc. Cependant, le projet est toujours en développement et n'est pas encore terminé.",
+				"secondParagraph": "Pourquoi ai-je réalisé ce projet ? J'ai fait ce projet parce que, depuis mon enfance, c'était l'un de mes rêves de créer mon propre serveur privé, et j'ai toujours voulu en savoir plus sur l'architecture des serveurs de jeu. J'ai aussi entrepris ce projet pour apprendre davantage sur TypeScript, Node.js et Redis. De plus, je voulais me lancer dans un grand projet pour améliorer mes compétences en programmation orientée objet et acquérir de l'expérience avec les types personnalisés en TypeScript."
+			}
+		},
+		"projectContent": {
+			"github": "Code source"
+		},
+		"about": {
+			"title": "À propos de moi",
+			"location": "Localisation",
+			"experience": "Expérience",
+			"hireable": "Disponible",
+			"years": "ans",
+			"true": "Oui",
+			"false": "Non",
+			"firstParagraph": "Depuis une vieille idée que j'avais quand j'étais jeune jusqu'à une véritable passion, j'ai toujours été fasciné par le web et ses technologies. J'ai commencé à apprendre le développement web par moi-même, puis j'ai décidé de suivre une formation pour devenir développeur web professionnel. Aujourd'hui, je suis développeur full-stack et je suis toujours à la recherche de nouveaux défis et d'opportunités pour apprendre de nouvelles choses.",
+			"secondParagraph": "Je suis aussi un batteur autodidacte qui adore jouer principalement du métal, et ça fait maintenant 4-5 ans que je pratique. En plus, je passe beaucoup de temps à jouer à des jeux vidéo, surtout des jeux en équipe comme Counter-Strike ou Valorant. J'aime me lancer des défis et repousser mes limites.",
+
+			"work": {
+				"title": "Expérience professionnelle",
+				"akrobate": {
+					"description": "J'ai développé au total 4 SaaS durant mon année chez Akrobate. Ils possèdent tous leur propre API côté serveur, et pour l'un d'entre eux, il y a aussi une application mobile. Bien sûr, j'ai beaucoup appris sur la gestion de projet et l'importance du product owner."
+				},
+				"prototyper": {
+					"description": "J'ai travaillé sur Perfect Post, un outil de copywriting pour LinkedIn, et sur la migration d'un site WordPress vers Webflow, en utilisant Strapi pour le backend."
+				}
+			},
+
+			"formation": {
+				"title": "Formation",
+				"cda": {
+					"title": "Concepteur Développeur d'Applications",
+					"description": "Pendant cette formation, j'ai appris à maintenir et gérer un projet de A à Z, de la conception au déploiement, en utilisant des outils de surveillance et de test tels que Docker, AWS, Sentry et Jenkins."
+				},
+				"devweb": {
+					"title": "Développeur Web et Mobile",
+					"description": "Pendant cette formation, j'ai appris les compétences de base en développement web telles que HTML, CSS, JavaScript, React, PHP, SQL, ainsi que l'utilisation de Figma pour le design."
+				}
+			}
+		},
+		"contact": {
+			"title": "Envoyez-moi un message !",
+			"description": "N'hésitez pas à me contacter à tout moment pour toute question ou demande. Je suis toujours ouvert aux nouvelles opportunités et collaborations, et je suis actuellement à la recherche d'un poste de développeur web.",
+
+      "form": {
+        "name": "Prénom",
+        "email": "Email",
+        "message": "Message",
+        "send": "Envoyer"
+      }
+		}
+	}
+}

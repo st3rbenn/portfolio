@@ -1,5 +1,4 @@
-import { OrbitControls } from "@react-three/drei"
-import { MotionCanvas } from "framer-motion-3d"
+import { Canvas } from "@react-three/fiber"
 import { useRef, useState } from "react"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import "./App.scss"
@@ -8,8 +7,6 @@ import StarField from "./components/three/StarField"
 import { EMPTY_POSITION, Position } from "./hooks/commonHooks"
 import _layout from "./pages/_layout"
 import Home from "./pages/home/Home"
-import { motion } from "framer-motion-3d"
-import { Canvas } from "@react-three/fiber"
 
 function App() {
 	const [handLandmarks, setHandLandmarks] = useState<HandLandmarks | undefined>(
@@ -19,6 +16,7 @@ function App() {
 	const [isHandTrackerEnabled, setIsHandTrackerEnabled] = useState(false)
 	const [isHandTrackerHovered, setIsHandTrackerHovered] = useState(false)
 	const [enableRotate, setEnableRotate] = useState(false)
+	const [language, setLanguage] = useState("en")
 
 	const globalRef = useRef<HTMLDivElement>(null)
 
@@ -40,17 +38,20 @@ function App() {
 					setIsHandTrackerEnabled={setIsHandTrackerEnabled}
 					setIsHandTrackerHovered={setIsHandTrackerHovered}
 					bodyRef={bodyRef}
+          language={language}
+          setLanguage={setLanguage}
 				/>
 			),
 			children: [
 				{
-					path: "/",
-					index: true,
+					path: `/home`,
 					element: (
 						<Home
 							handLandmarks={handLandmarks}
 							isHandTrackerHovered={isHandTrackerHovered}
 							globalRef={globalRef}
+							setLanguage={setLanguage}
+							language={language}
 						/>
 					),
 				},

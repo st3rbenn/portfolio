@@ -12,6 +12,7 @@ type LinkProps = {
 	style?: React.CSSProperties
 	onHoverStart?: () => void
 	onHoverEnd?: () => void
+  onClick?: () => void
 	link: string
 	external?: boolean
 	animation?: boolean | AnimationControls | TargetAndTransition | VariantLabels
@@ -39,6 +40,7 @@ const CustomLink = (props: LinkProps) => {
 		style,
 		onHoverStart,
 		onHoverEnd,
+    onClick,
 		link,
 		external = false,
 		animation,
@@ -123,6 +125,7 @@ const CustomLink = (props: LinkProps) => {
 			onMouseLeave={onMouseLeave}
 			onMouseOver={onMouseHover}
 			ref={linkRef}
+      onClick={onClick}
 			style={{
 				...style,
 			}}
