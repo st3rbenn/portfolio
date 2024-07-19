@@ -1,7 +1,5 @@
 import { motion } from "framer-motion"
-import { useState } from "react"
-import TechnoList, { TechnoListItem } from "./TechnoList"
-import CustomLink from "../../common/Customlink"
+import { TechnoListItem } from "./TechnoList"
 
 export type DegreeItemProps = {
 	title: string

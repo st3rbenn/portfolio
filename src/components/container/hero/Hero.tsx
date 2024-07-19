@@ -1,9 +1,9 @@
-import { motion, useAnimate, useScroll, useTransform } from "framer-motion"
-import { useEffect, useRef } from "react"
+import { motion, useScroll, useTransform } from "framer-motion"
+import { useRef } from "react"
+import { useTranslation } from "react-i18next"
+import { FiChevronDown } from "react-icons/fi"
 import { HandLandmarks } from "../../cursor/CustomCursor"
 import HeadAnimation from "../../handtracker/HeadAnimation"
-import { FiArrowDown } from "react-icons/fi"
-import { useTranslation } from "react-i18next"
 
 type Props = {
 	handLandmarks: HandLandmarks | undefined
@@ -11,7 +11,7 @@ type Props = {
 }
 
 const Hero = (props: Props) => {
-  const {t} = useTranslation()
+	const { t } = useTranslation()
 	const { handLandmarks, isHandTrackerHovered } = props
 	const homeRef = useRef<HTMLDivElement>(null)
 	const { scrollYProgress } = useScroll({
@@ -59,7 +59,7 @@ const Hero = (props: Props) => {
 						fontWeight: "300",
 					}}
 				>
-          {t("translation.home.welcome")}
+					{t("translation.home.welcome")}
 				</motion.h1>
 				<motion.div className="section__name">
 					<motion.p
@@ -85,7 +85,7 @@ const Hero = (props: Props) => {
 				</motion.p>
 			</motion.div>
 			{/* <NavigationBar /> */}
-			<FiArrowDown
+			<FiChevronDown
 				className="arrow"
 				style={{
 					position: "absolute",

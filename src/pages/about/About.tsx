@@ -16,6 +16,10 @@ import AboutItem from "./AboutItem"
 
 import "./about.scss"
 import { useTranslation } from "react-i18next"
+import NextSVG from "../../components/svg/techno/NextSVG"
+import ReactNativeSVG from "../../components/svg/techno/ReactNativeSVG"
+import GithubSVG from "../../components/svg/techno/GithubSVG"
+import GitlabSVG from "../../components/svg/techno/GitlabSVG"
 
 const DevTechnoList = [
 	{
@@ -84,6 +88,45 @@ const prototyperTechnoList = [
 		name: "React",
 		icon: ReactSVG,
 	},
+  {
+    name: "Github",
+    icon: GithubSVG,
+  },
+	{
+		name: "Typescript",
+		icon: TypescriptSVG,
+	},
+	{
+		name: "Figma",
+		icon: FigmaSVG,
+	},
+	{
+		name: "SQL",
+		icon: MySQLSVG,
+	},
+	{
+		name: "AWS",
+		icon: AwsSVG,
+	},
+	{
+		name: "Docker",
+		icon: DockerSVG,
+	},
+];
+
+const akrobateTechnoList = [
+	{
+		name: "React Native",
+		icon: ReactNativeSVG,
+	},
+  {
+    name: "Gitlab",
+    icon: GitlabSVG
+  },
+  {
+    name: "Next JS",
+    icon: NextSVG,
+  },
 	{
 		name: "Typescript",
 		icon: TypescriptSVG,
@@ -279,7 +322,7 @@ const About = (props: Props) => {
 					</motion.h2>
 					<AboutItem
 						date="2023 - 2024"
-						technoList={prototyperTechnoList}
+						technoList={akrobateTechnoList}
 						title="CTO - Developer fullstack TypeScript"
 						company="Startup Akrobate"
 						description={t("translation.about.work.akrobate.description")}

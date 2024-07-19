@@ -1,24 +1,17 @@
-import { Dispatch, SetStateAction, useState } from "react"
+import { motion } from "framer-motion"
+import { Dispatch, SetStateAction } from "react"
 import CustomLink from "../../common/Customlink"
 import GithubSVG from "../../svg/GithubSVG"
 import LinkedinSVG from "../../svg/LinkedinSVG"
 import MailSVG from "../../svg/MailSVG"
-import { motion } from "framer-motion"
 
-import "./socialmedialinks.scss"
-import CustomButton from "../../common/CustomButton"
 import i18next from "i18next"
+import CustomButton from "../../common/CustomButton"
+import "./socialmedialinks.scss"
 
 type Props = {
 	language: string
 	setLanguage: Dispatch<SetStateAction<string>>
-}
-
-const btnStyle = {
-	background: "none",
-	border: "none",
-	cursor: "pointer",
-	outline: "none",
 }
 
 const SocialMediaLinks = (props: Props) => {

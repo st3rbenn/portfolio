@@ -44,7 +44,8 @@ function App() {
 			),
 			children: [
 				{
-					path: `/home`,
+					path: `/`,
+          index: true,
 					element: (
 						<Home
 							handLandmarks={handLandmarks}

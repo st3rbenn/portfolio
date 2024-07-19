@@ -1,9 +1,8 @@
-import { FiArrowUpRight } from "react-icons/fi"
-import TechnoList, { TechnoListItem } from "../container/degree/TechnoList"
 import CustomLink from "../common/Customlink"
+import TechnoList, { TechnoListItem } from "../container/degree/TechnoList"
 
-import "./projectContent.scss"
 import { useTranslation } from "react-i18next"
+import "./projectContent.scss"
 
 type ProjectContentProps = {
 	title: string

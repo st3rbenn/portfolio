@@ -75,6 +75,7 @@ const Tooltip = (props: Props) => {
 					padding: "0.5rem",
 					borderRadius: "0.5rem",
 					display: "none",
+          whiteSpace: "nowrap",
 				}}
 				ref={tooltipRef}
 			>
