@@ -1,61 +1,53 @@
 import { motion } from "framer-motion"
-import NavigationBar from "../../components/container/NavigationBar/NavigationBar"
+import i18next from "i18next"
+import { Dispatch, RefObject, SetStateAction } from "react"
+import CustomButton from "../../components/common/CustomButton"
+import Hero from "../../components/container/hero/Hero"
 import { HandLandmarks } from "../../components/cursor/CustomCursor"
-import HeadAnimation from "../../components/handtracker/HeadAnimation"
+import { ParallaxProject } from "../../components/projects/ParalaxProject"
+import About from "../about/About"
+import ContactMe from "../contactme/ContactMe"
 import "./home.scss"
 
 type HomeProps = {
 	handLandmarks: HandLandmarks | undefined
 	isHandTrackerHovered: boolean
+	globalRef: RefObject<HTMLDivElement>
+	setLanguage: Dispatch<SetStateAction<string>>
+	language: string
 }
 
 const Home = (props: HomeProps) => {
-	const { handLandmarks, isHandTrackerHovered } = props
+	const {
+		handLandmarks,
+		isHandTrackerHovered,
+		globalRef,
+		setLanguage,
+		language,
+	} = props
+
 	return (
-		<motion.section className="container">
-			<motion.div
-				className="section"
-				animate={{
-					opacity: [0, 1],
-					transition: {
-						duration: 0.5,
-					},
-				}}
-			>
-				<HeadAnimation
-					handLandmarks={handLandmarks}
-					isHandTrackerHovered={isHandTrackerHovered}
-					style={{
-						paddingLeft: "2.5rem",
-					}}
-				/>
-				<motion.h1>Welcome !</motion.h1>
-				<motion.div className="section__name">
-					<motion.p
-						style={{
-							alignSelf: "end",
-							paddingBottom: "0.5rem",
-							paddingRight: "0.5rem",
-						}}
-					>
-						i'm
-					</motion.p>
-					<motion.h1
-						style={{
-							fontWeight: "normal",
-							color: "#6F7FAC",
-						}}
-					>
-						Anthonin
-					</motion.h1>
-				</motion.div>
-				<motion.p className="section__quote">
-					a french developer who like baking websites like a baker making is
-					bread, with ♥️ and passion 🥖
-				</motion.p>
-			</motion.div>
-			<NavigationBar />
-		</motion.section>
+		<motion.main
+			ref={globalRef}
+			initial={{
+				opacity: 0,
+			}}
+			animate={{
+				opacity: [0, 1],
+				transition: {
+					delay: 2.4,
+				},
+			}}
+			className="main"
+		>
+			<Hero
+				handLandmarks={handLandmarks}
+				isHandTrackerHovered={isHandTrackerHovered}
+			/>
+			<ParallaxProject />
+			<About />
+			<ContactMe />
+		</motion.main>
 	)
 }
 

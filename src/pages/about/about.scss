@@ -1,0 +1,11 @@
+.about-container {
+	width: 50%;
+	margin: 0 auto;
+	margin-bottom: 5rem;
+	position: relative;
+	margin-top: 15rem;
+
+  @media screen and (max-width: 768px) {
+    width: 75%;
+  }
+}

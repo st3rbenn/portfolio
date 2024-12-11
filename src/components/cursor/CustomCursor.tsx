@@ -3,11 +3,7 @@ import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils"
 import { HAND_CONNECTIONS, Hands, InputImage, Results } from "@mediapipe/hands"
 import { motion } from "framer-motion"
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
-import {
-  EMPTY_POSITION,
-  Position,
-  useThrottle
-} from "../../hooks/commonHooks"
+import { EMPTY_POSITION, Position, useThrottle } from "../../hooks/commonHooks"
 import CursorSVG from "../svg/CursorSVG"
 
 export interface HandLandmarks {
@@ -47,6 +43,7 @@ const CustomCursor: FC<IHandTrackerComponentProps> = (
 	const cursorRef = useRef<HTMLDivElement>(null)
 	const [performAction, setPerformAction] = useState(false)
 	const [isClickAllowed, setIsClickAllowed] = useState(true)
+	const [triggerClickEffect, setTriggerClickEffect] = useState(false)
 	let lastHoveredElement: Element | null = null
 	let timeoutId: NodeJS.Timeout | undefined = undefined // Variable globale ou d'état pour stocker l'ID du timeout
 
@@ -247,6 +244,13 @@ const CustomCursor: FC<IHandTrackerComponentProps> = (
 			})
 		})
 
+		window.addEventListener("click", () => {
+			setTriggerClickEffect(true)
+			setTimeout(() => {
+				setTriggerClickEffect(false)
+			}, 500)
+		})
+
 		return () => {
 			window.removeEventListener("mousemove", (event) => {
 				setCursorPosition({
@@ -259,7 +263,7 @@ const CustomCursor: FC<IHandTrackerComponentProps> = (
 				})
 			})
 		}
-	}, [])
+	}, [setCursorPosition, setTriggerClickEffect])
 
 	return (
 		<>
@@ -284,7 +288,11 @@ const CustomCursor: FC<IHandTrackerComponentProps> = (
 				}}
 				ref={cursorRef}
 			>
-				<CursorSVG performAction={performAction} />
+				<CursorSVG
+					performAction={performAction}
+					clickTriggered={triggerClickEffect}
+          cursorPosition={cursorPosition}
+				/>
 			</motion.div>
 		</>
 	)

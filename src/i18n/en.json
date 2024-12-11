@@ -1,0 +1,69 @@
+{
+	"translation": {
+		"home": {
+			"welcome": "Welcome !",
+			"im": "I'm",
+			"quote": "I'm a junior french developer who likes baking websites like a baker making his bread with ♥️ and passion"
+		},
+		"project": {
+			"title": "Projects",
+			"gratflix": {
+				"title": "UI implementation for Plex or Jellyfin",
+				"firstParagraph": "Gratflix is a web application that allows you to browse your Plex or Jellyfin library and watch movies or series. The goal was to recreate the famous Netflix UI with a Plex or Jellyfin backend. The project is made with React and TypeScript.",
+				"secondParagraph": "I did this project during my first year at CEFIM. We had to present a project to the jury at the end of the year. I chose to do this project because I wanted to learn more about React and TypeScript. It enabled me to be one of the top students in my class and to be congratulated by the jury."
+			},
+			"breakemu": {
+				"title": "Dofus emulator in TypeScript",
+				"firstParagraph": "BreakEmu is a Dofus emulator written in TypeScript. The goal was to create a Dofus emulator in TypeScript to learn more about the game's architecture and to improve my TypeScript skills. The project is built with TypeScript, Node.js, and Redis. I created a PWA with React to manage the server, and various tools for managing game files, features, etc but is still in development and is not yet finished.",
+				"secondParagraph": "Why did I make this project? I made this project because, in my childhood, it was one of my dreams to create my own private server, and I always wanted to learn more about game server architecture. I also made this project to learn more about TypeScript, Node.js, and Redis. Additionally, I wanted to undertake a big project to improve my skills in object-oriented programming and to gain experience with custom types in TypeScript."
+			}
+		},
+		"projectContent": {
+			"github": "Source code"
+		},
+		"about": {
+			"title": "About me",
+			"location": "Location",
+			"experience": "Experience",
+			"hireable": "Hireable",
+			"years": "years",
+			"true": "Yes",
+			"false": "No",
+			"firstParagraph": "From an old idea I had when I was young to a real passion, I've always been interested in the web and its technologies. I started to learn web development by myself, and then I decided to follow a training program to become a professional web developer. I'm now a full-stack developer, and I'm always looking for new challenges and opportunitiesto learn new things.",
+			"secondParagraph": "I'm a self-taught drummer who loves to play mainly metal, and I've been doing it for 4-5 years now. I also play a lot of video games, mainly team-based games like Counter-Strike or Valorant. I love challenging myself and pushing my limits.",
+
+			"work": {
+				"title": "Work experience",
+				"akrobate": {
+					"description": "I've developed a total of 4 SaaS products during my time here. They all come with their own APIs on the backend, and for one of them, there's also a mobile application. Of course, I've learned a lot about project management and the importance of the product owner."
+				},
+				"prototyper": {
+					"description": "I worked on Perfect Post, a copywriting tool for LinkedIn, and on the migration of a WordPress site to Webflow, utilizing Strapi for the back-end."
+				}
+			},
+
+			"formation": {
+				"title": "Formation",
+				"cda": {
+					"title": "Application designers and developers",
+					"description": "During this training, I learned how to maintain and manage a project from A to Z, from design to deployment, utilizing tools for monitoring and testing such as Docker, AWS, Sentry and Jenkins."
+				},
+				"devweb": {
+					"title": "Web developper and mobile",
+					"description": "During this training, I learned basic web development skills such as HTML, CSS, JavaScript, React, PHP, SQL, and also how to use Figma for design."
+				}
+			}
+		},
+    "contact": {
+      "title": "Let's talk !",
+			"description": "Feel free to contact me anytime for any questions or inquiries. I'm always open to new opportunities and collaborations, and I'm currently seeking a job as a web developer.",
+
+      "form": {
+        "name": "Name",
+        "email": "Email",
+        "message": "Message",
+        "send": "Send"
+      }
+    }
+	}
+}

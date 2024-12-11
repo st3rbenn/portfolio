@@ -1,0 +1,45 @@
+input,
+textarea {
+	width: 100%;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+	color: #000;
+
+	//glassmorphism effect
+	background: #e5f0ff;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+input::placeholder,
+textarea::placeholder {
+	color: #000;
+	font-weight: normal;
+}
+
+.submit {
+	color: #000;
+	border: none;
+	padding: 0.5rem 1rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	font-weight: normal;
+
+	//glassmorphism effect
+	background: #e5f0ff;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.contact_container {
+	margin-bottom: 5rem;
+	width: 50%;
+	margin: 0 auto;
+	position: relative;
+	margin-top: 10rem;
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1rem;
+
+	@media screen and (max-width: 768px) {
+		width: 75%;
+	}
+}

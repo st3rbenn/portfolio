@@ -20,7 +20,6 @@ type ButtonProps = {
 const btnStyle = {
 	background: "none",
 	border: "none",
-	cursor: "none",
 	outline: "none",
 }
 
