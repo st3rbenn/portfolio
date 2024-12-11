@@ -10,7 +10,6 @@ type StarFieldProps = {
 }
 
 const StarField = (props: StarFieldProps) => {
-	const { globalRef } = props
 	const meshRef = useRef<THREE.Points>(null!)
 	const { scene, camera, gl } = useThree()
 	const { scrollYProgress } = useScroll()
@@ -94,7 +93,7 @@ const StarField = (props: StarFieldProps) => {
 
 	useFrame(() => {
 		if (meshRef.current) {
-			meshRef.current.rotation.y += 0.0005 // Rotation for animation
+			meshRef.current.rotation.y += 0.0002 // Rotation for animation
 		}
 
 		const scrollY = Math.round(scrollYProgress.get() * 100)
